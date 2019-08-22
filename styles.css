@@ -1,27 +1,109 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 body {
   overflow-x: scroll;
   white-space: nowrap;
+  font-family: 'Lato', 'san-serif';
+}
+
+.column-wrapper {
+  height: 100vh;
+  width: 275px;
+  display: inline-block;
+  background-color:rgb(231, 230, 241); 
 }
 
 .list-container {
-  height: 100vh;
-  width: 325px;
-  display: inline-block;
-  border: red solid 1px; 
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: rgb(140, 114, 189) solid 1px; 
+  color: rgb(85, 3, 85);
 }
-.sortable { 
-  width: 290px; 
-  height: 90vh;
+.list-container h3 {
+  font-size: 20px;
+}
+
+.add-job-wrapper {
+  height: 60px;
+}
+
+.add-job-button {
+  width: 90%;
+  height: 35px;
+  border: 1px solid purple;
+  border-radius: 4px;
   margin: 0 auto;
-  background-color:rgb(223, 198, 198); 
+  display: flex;
+}
+
+.add-job-button p {
+  margin: auto;
+  font-size: 25px;
+  color: grey;
+}
+
+.sortable { 
+  width: 260px; 
+  height: 100%;
+  margin: 0 auto;
   overflow-y: scroll;
-  font-family: 'Lato', 'san-serif';
+  /* border: black solid 1px; */
+  flex-shrink: 1;
 }
 
 .job-post { 
   font-size: 20px; 
-  width: 260px;
-  height: 100px;
+  width: 235px;
+  height: 85px;
   border-radius: 4px;
   margin: 0 auto;
   margin-bottom: 10px; 
@@ -41,14 +123,26 @@ body {
 
 .placeholder { 
   font-size: 1.4em; 
-  width: 260px;
-  height: 100px;
+  width: 230px;
+  height: 85px;
   border-radius: 4px;
   margin: 0 auto;
   margin-bottom: 10px; 
-  background-color: lightgray; 
+  background-color: lightgray;
+  animation: color-me-in 1.3s infinite;
 }
 
 form {
   height: 400px;
+}
+
+@keyframes color-me-in {
+  /* You could think of as "step 1" */
+  0% {
+    background: lightblue;
+  }
+  /* You could think of as "step 2" */
+  100% {
+    background: lightgray;
+  }
 }
