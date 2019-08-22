@@ -24,17 +24,15 @@ $(function() {
   $(".sortable").sortable({
     placeholder: 'placeholder',
     connectWith: ".sortable",
+    scroll: true,
     receive: function (e , ui) {
-      let senderId = ui.sender.attr('id');
       let receiverId = $(this).attr('id');
 
       columns[receiverId] = $(`#${receiverId}`).sortable('toArray');
-      columns[senderId] = $(`#${senderId}`).sortable('toArray');
-      localStorage.setItem('columns', JSON.stringify(columns));
     },
     stop: function (e, ui) {
-      let columnId = $(this).attr('id');
-      columns[columnId] = $(`#${columnId}`).sortable('toArray');
+      let stopId = $(this).attr('id');
+      columns[stopId] = $(`#${stopId}`).sortable('toArray');
       
       localStorage.setItem('columns', JSON.stringify(columns));
     }
@@ -72,6 +70,25 @@ $(function() {
     $editForm.modal({
       clickClose: false
     });
+  });
+
+  $('body').on('click', '.add-job-button', function(e) {
+    let sortableId = $(this)
+      .closest('.list-container')
+      .children('.sortable')[0].id;
+
+    let text = 'clicked';
+    let jobId = Date.now();
+
+    $(`<div></div>`, {
+      id: jobId,
+      'class': "job-post",
+      data: { info: {name: 'clicked', color: 'brown'} },
+      css: { 'background-color': 'brown' }
+
+    }).appendTo($(`#${sortableId}`));
+
+  $(`#${jobId}`).append(`<span>${text}</span>`)
   });
 
   $editSave.click(function(e) {
