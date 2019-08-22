@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Hunty Board</title>
+
+  <script defer
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script defer
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+  <script defer 
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+  <script defer src='js.js'></script>
+  
+
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <div class='list-container'>
+      <button>+</button>
+      <div class="sortable" id='applied'></div>
+  </div>
+
+  <div class='list-container'>
+      <button>+</button>
+      <div class="sortable" id='interview'></div>
+  </div>
+
+  <div class='list-container'>
+      <button>+</button>
+      <div class="sortable" id='offer'></div>
+  </div>
+
+  <form id="edit-form" class="modal">
+      <input type="hidden" id='edit-job-id'>
+      Company Name:<br>
+      <input type='text' name='companyname' id='edit-name'><br>
+      Color:<br>
+      <input type='text' name='color' id='edit-color'><br>
+      <button id='edit-save'>Save</button>
+  </form>
+</body>
+</html>
