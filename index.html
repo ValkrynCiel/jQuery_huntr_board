@@ -21,7 +21,6 @@
 
   <script defer src='sortable.js'></script>
   
-
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
 
@@ -47,6 +46,15 @@
       </div>
     </div>
   </template>
+
+  <form id="add-form" class="modal">
+      <input type="hidden" id='add-column-id'>
+      Company Name:<br>
+      <input type='text' name='companyname' id='add-name'><br>
+      Color:<br>
+      <!-- <input type='text' name='color' id='add-color'><br> -->
+      <button id='add-save'>Save</button>
+  </form>
 
   <form id="edit-form" class="modal">
       <input type="hidden" id='edit-job-id'>

@@ -1,5 +1,10 @@
 $(function() {
 
+  let $addForm = $('#add-form');
+  let $addName = $('#add-name');
+  // let $addColor = $('#add-color');
+  let $addSave = $('#add-save');
+  let $addColumnId = $('#add-column-id');
 
   let $editForm = $('#edit-form');
   let $editName = $('#edit-name');
@@ -22,8 +27,14 @@ $(function() {
 
       let $column = $($('#column-template').html());
 
-      $column.find('.title').html(key.toUpperCase());
-      $column.find('.sortable').attr('id', key);
+      $column
+        .find('.title')
+          .html(key.toUpperCase());
+
+      $column
+        .find('.sortable')
+          .attr('id', key);
+
       $('body').append($column);
 
       displayJobOrder(key);
@@ -52,7 +63,8 @@ $(function() {
       .attr('id', id)
       .css({ 'background-color': info.color })
       .data({ info })
-      .find('.company-name').html(info.name);
+      .find('.company-name')
+        .html(info.name);
  
     return $jobPost
   }
@@ -87,9 +99,12 @@ $(function() {
 
   $('body').on('click', '.job-post', function(e) {
 
-    $editJobId.val($(this).attr('id'));
-    $editName.val($(this).data('info').name);
-    $editColor.val($(this).data('info').color);
+    $editJobId
+      .val($(this).attr('id'));
+    $editName
+      .val($(this).data('info').name);
+    $editColor
+      .val($(this).data('info').color);
 
     $editForm.modal({
       clickClose: false
@@ -99,10 +114,13 @@ $(function() {
   $('body').on('click', '.icon', function(e) {
     e.stopPropagation();
     let sortableId = $(this)
-      .closest('.sortable').eq(0).attr('id');
+      .closest('.sortable')
+        .eq(0)
+        .attr('id');
 
     let $job = $(this)
-      .closest('.job-post').eq(0);
+      .closest('.job-post')
+        .eq(0);
 
     $job.remove();
     delete jobs[$job.attr('id')];
@@ -117,13 +135,26 @@ $(function() {
   $('body').on('click', '.add-job-button', function(e) {
     let sortableId = $(this)
       .closest('.list-container')
-      .children('.sortable').eq(0).attr('id');
+      .children('.sortable')
+        .eq(0).attr('id');
+
+    $addColumnId.val(sortableId);
+
+    $addForm.modal({
+      clickClose: false
+    });
+    
+  });
+
+  $addSave.click(function(e) {
+
+    let sortableId = $addColumnId.val();
 
     let jobId = Date.now();
     let color = `rgb(${Math.floor(Math.random()*255)},
                      ${Math.floor(Math.random()*255)},
                      ${Math.floor(Math.random()*255)})`;
-    let name = 'clicked';
+    let name = $addName.val();
     let info = { name, color }
     
     let $jobPost = createJobPost(jobId, info);
@@ -133,7 +164,6 @@ $(function() {
     columns[sortableId] = $(`#${sortableId}`).sortable('toArray');
     localStorage.setItem('columns', JSON.stringify(columns));
     localStorage.setItem('jobs', JSON.stringify(jobs));
-    
   });
 
   $editSave.click(function(e) {
