@@ -6,19 +6,14 @@ $(function() {
   let $editSave = $('#edit-save');
   let $editJobId = $('#edit-job-id');
 
-  let jobs = localStorage.getItem('jobs') ? JSON.parse(localStorage.getItem('jobs'))
-    : {
-    1: { name: 'google', color: 'green' }, 
-    2: { name: 'facebook', color: 'blue' }, 
-    3: { name: 'microsoft', color: 'red' }, 
-    4: { name: 'walmart', color: 'yellow' }, 
-    5: { name: 'betterhelp', color: 'orange'}
-  }
+  let jobs = localStorage.getItem('jobs') ? 
+  JSON.parse(localStorage.getItem('jobs')) : {}
 
-  let columns = localStorage.getItem('columns') ? JSON.parse(localStorage.getItem('columns')) : {
-    applied: [1, 3, 5],
-    interview: [4],
-    offer: [2]
+  let columns = localStorage.getItem('columns') ? 
+  JSON.parse(localStorage.getItem('columns')) : {
+    applied: [],
+    interview: [],
+    offer: []
   }
 
   $(".sortable").sortable({

@@ -70,9 +70,6 @@ body {
   border: rgb(140, 114, 189) solid 1px; 
   color: rgb(85, 3, 85);
 }
-.list-container h3 {
-  font-size: 20px;
-}
 
 .add-job-wrapper {
   height: 60px;
@@ -81,10 +78,17 @@ body {
 .add-job-button {
   width: 90%;
   height: 35px;
-  border: 1px solid purple;
+  background-color: rgb(248, 239, 248);
   border-radius: 4px;
   margin: 0 auto;
   display: flex;
+  box-shadow: 0px 1px 4px #d3c9e6
+}
+
+.add-job-button:hover {
+  box-shadow: 0px 2px 7px #c8bbe0;
+  background-color: rgb(248, 244, 248);
+  cursor: pointer;
 }
 
 .add-job-button p {
@@ -93,12 +97,22 @@ body {
   color: grey;
 }
 
+.title-wrapper {
+  width: 100%;
+  height: 75px;
+  display: flex;
+}
+
+.title-wrapper h3 {
+  margin: auto;
+  font-size: 20px;
+}
+
 .sortable { 
   width: 260px; 
   height: 100%;
   margin: 0 auto;
   overflow-y: scroll;
-  /* border: black solid 1px; */
   flex-shrink: 1;
   margin-bottom: 5px;
 }
@@ -148,7 +162,6 @@ body {
   display: block;
   margin: auto;
   position: relative;
-  top: -1px;
 }
     
 .highlight { 
@@ -171,12 +184,16 @@ form {
 }
 
 @keyframes color-me-in {
-  /* You could think of as "step 1" */
   0% {
-    background: lightblue;
+    background: rgb(224, 203, 233);
   }
-  /* You could think of as "step 2" */
   100% {
     background: lightgray;
+  }
+}
+
+@keyframes highlight-shadow {
+  0% {
+    
   }
 }
