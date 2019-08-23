@@ -24,7 +24,18 @@ $(function() {
   $(".sortable").sortable({
     placeholder: 'placeholder',
     connectWith: ".sortable",
-    scroll: true,
+    opacity: 0.8,
+    start: function (e, ui) {
+      ui.item.children('.icon').eq(0).toggleClass('is-dragging');
+      console.log(ui.item.children('.icon').eq(0).hasClass('is-dragging'));
+    },
+    over: function(e,ui) {
+      if (ui.sender) {
+        let widget = ui.sender.data("ui-sortable");
+        widget.scrollParent = $(this);
+        widget.overflowOffset = $(this).offset();
+      }
+    },
     receive: function (e , ui) {
       let receiverId = $(this).attr('id');
 
@@ -35,6 +46,7 @@ $(function() {
       columns[stopId] = $(`#${stopId}`).sortable('toArray');
       
       localStorage.setItem('columns', JSON.stringify(columns));
+      ui.item.children('.icon').eq(0).toggleClass('is-dragging')
     }
   });
 
@@ -53,8 +65,15 @@ $(function() {
             css: { 'background-color': job.color }
           }
         ).appendTo($(`#${column}`));
+
+        let $title = $(`<span>${job.name}</span>`);
     
-        $(`#${id}`).append(`<span>${job.name}</span>`)
+        let $trashIcon = 
+        $(`<div class="icon">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+          <div/>`);
+    
+        $(`#${id}`).append($title, $trashIcon);
       }; 
     };
   }
@@ -72,23 +91,59 @@ $(function() {
     });
   });
 
+  $('body').on('click', '.icon', function(e) {
+    e.stopPropagation();
+    let $sortable = $(this)
+      .closest('.sortable')[0];
+    let $job = $(this)
+      .closest('.job-post')[0];
+
+    $(`#${$job.id}`).remove();
+    delete jobs[$job.id];
+    $('.sortable').sortable('refresh');
+
+    columns[$sortable.id] = $(`#${$sortable.id}`).sortable('toArray');
+    localStorage.setItem('columns', JSON.stringify(columns));
+    localStorage.setItem('jobs', JSON.stringify(jobs));
+    
+  });
+    
+
   $('body').on('click', '.add-job-button', function(e) {
     let sortableId = $(this)
       .closest('.list-container')
       .children('.sortable')[0].id;
 
-    let text = 'clicked';
     let jobId = Date.now();
+    let color = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
+    let name = 'clicked';
+    let info = { name, color }
+    
 
     $(`<div></div>`, {
       id: jobId,
       'class': "job-post",
-      data: { info: {name: 'clicked', color: 'brown'} },
-      css: { 'background-color': 'brown' }
+      data: { info },
+      css: { 'background-color': color }
 
     }).appendTo($(`#${sortableId}`));
 
-  $(`#${jobId}`).append(`<span>${text}</span>`)
+    $('.sortable').sortable('refresh');
+
+    let $title = $(`<span>clicked</span>`);
+
+    let $trashIcon = 
+    $(`<div class="icon">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+      <div/>`);
+
+    $(`#${jobId}`).append($title, $trashIcon);
+
+    jobs[jobId] = info
+    columns[sortableId] = $(`#${sortableId}`).sortable('toArray');
+    localStorage.setItem('columns', JSON.stringify(columns));
+    localStorage.setItem('jobs', JSON.stringify(jobs));
+    
   });
 
   $editSave.click(function(e) {
