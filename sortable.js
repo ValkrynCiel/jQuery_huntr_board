@@ -1,5 +1,6 @@
 $(function() {
 
+
   let $editForm = $('#edit-form');
   let $editName = $('#edit-name');
   let $editColor = $('#edit-color');
@@ -45,35 +46,39 @@ $(function() {
     }
   });
 
-  function displayJobOrder() {
-    for (let column in columns) {
+  function displayColumns() {
+    for (let key in columns) {
 
-      let order = columns[column];
+      let $column = $($('#column-template').html());
 
-      for (let id of order) {
-        let job = jobs[id];
+      $column.find('.title').html(key.toUpperCase());
+      $column.find('.sortable').attr('id', key);
+      $('body').append($column);
+      
+      displayJobOrder(key);
 
-        $(`<div></div>`, {
-            id,
-            'class': "job-post",
-            data: { info: job },
-            css: { 'background-color': job.color }
-          }
-        ).appendTo($(`#${column}`));
-
-        let $title = $(`<span>${job.name}</span>`);
-    
-        let $trashIcon = 
-        $(`<div class="icon">
-              <i class="fa fa-trash" aria-hidden="true"></i>
-          <div/>`);
-    
-        $(`#${id}`).append($title, $trashIcon);
-      }; 
-    };
+    }
   }
 
-  displayJobOrder();
+  displayColumns();
+
+  function displayJobOrder(column) {
+    let order = columns[column];
+    
+    for (let id of order) {
+
+      let jobInfo = jobs[id];
+      let $jobPost = $($('#job-post-template').html());
+
+      $jobPost
+        .attr('id', id)
+        .css({ 'background-color': jobInfo.color })
+        .data({ info: jobInfo })
+        .find('.company-name').html(jobInfo.name);
+
+      $(`#${column}`).append($jobPost);
+    }; 
+  }
 
   $('body').on('click', '.job-post', function(e) {
 

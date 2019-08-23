@@ -27,41 +27,26 @@
 
 </head>
 <body>
-  <div class='column-wrapper'>
+  <template id='column-template'>
     <div class='list-container'>
         <div class='title-wrapper'>
-          <h3>APPLIED</h3>
+          <h3 class='title'></h3>
         </div>
         <div class='add-job-wrapper'>
           <div class='add-job-button'><p>+</p></div>
         </div>
-        <div class="sortable" id='applied'></div>
+        <div class="sortable"></div>
     </div>
-  </div
+  </template>
 
-  ><div class='column-wrapper'>
-    <div class='list-container'>
-        <div class='title-wrapper'>
-          <h3>INTERVIEW</h3>
-        </div>
-        <div class='add-job-wrapper'>
-          <div class='add-job-button'><p>+</p></div>
-        </div>
-        <div class="sortable" id='interview'></div>
+  <template id='job-post-template'>
+    <div class='job-post'>
+      <span class='company-name'></span>
+      <div class="icon">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+      </div>
     </div>
-  </div
-
-  ><div class='column-wrapper'>
-    <div class='list-container'>
-        <div class='title-wrapper'>
-          <h3>OFFER</h3>
-        </div>
-        <div class='add-job-wrapper'>
-          <div class='add-job-button'><p>+</p></div>
-        </div>
-        <div class="sortable" id='offer'></div>
-    </div>
-  </div> 
+  </template>
 
   <form id="edit-form" class="modal">
       <input type="hidden" id='edit-job-id'>

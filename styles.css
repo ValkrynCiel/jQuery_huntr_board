@@ -21,7 +21,8 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
+  vertical-align: baseline;
+  box-sizing: border-box;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -54,25 +55,19 @@ body {
   
 }
 
-.column-wrapper {
+.list-container {
   height: 100vh;
   width: 275px;
-  display: inline-block;
-  background-color:rgb(231, 230, 241); 
+  display: inline-flex;
+  background-color:rgb(215, 203, 238); 
   user-select: none;
-}
-
-.list-container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
   border: rgb(140, 114, 189) solid 1px; 
   color: rgb(85, 3, 85);
+  flex-direction: column;
 }
 
 .add-job-wrapper {
-  height: 60px;
+  height: 80px;
 }
 
 .add-job-button {
@@ -99,7 +94,7 @@ body {
 
 .title-wrapper {
   width: 100%;
-  height: 75px;
+  height: 130px;
   display: flex;
 }
 
@@ -175,8 +170,8 @@ body {
   border-radius: 4px;
   margin: 0 auto;
   margin-bottom: 10px; 
-  background-color: lightgray;
-  animation: color-me-in 1.3s infinite;
+  background-color: rgb(201, 189, 223);
+  animation: color-me-in 1.7s infinite;
 }
 
 form {
@@ -185,10 +180,11 @@ form {
 
 @keyframes color-me-in {
   0% {
-    background: rgb(224, 203, 233);
+    background: rgb(213, 193, 248);
+    
   }
   100% {
-    background: lightgray;
+    background: rgb(210, 186, 250);
   }
 }
 
