@@ -1,8 +1,13 @@
 $(function() {
 
+  let $deleteNotice = $('#delete-job-notice');
+  let $deleteColumnId = $('#delete-column-id');
+  let $deleteJobId = $('#delete-job-id');
+  let $deleteButton = $('#delete-button');
+  let $nevermindButton = $('#nevermind-button');
+
   let $addForm = $('#add-form');
   let $addName = $('#add-name');
-  // let $addColor = $('#add-color');
   let $addSave = $('#add-save');
   let $addColumnId = $('#add-column-id');
 
@@ -74,7 +79,7 @@ $(function() {
     connectWith: ".sortable",
     opacity: 0.8,
     start: function (e, ui) {
-      ui.item.children('.icon').eq(0).toggleClass('is-dragging');
+      ui.item.children('.icon-container').eq(0).toggleClass('is-dragging');
     },
     over: function(e,ui) {
       if (ui.sender) {
@@ -93,7 +98,7 @@ $(function() {
       columns[stopId] = $(`#${stopId}`).sortable('toArray');
       
       localStorage.setItem('columns', JSON.stringify(columns));
-      ui.item.children('.icon').eq(0).toggleClass('is-dragging')
+      ui.item.children('.icon-container').eq(0).toggleClass('is-dragging')
     }
   });
 
@@ -111,16 +116,31 @@ $(function() {
     });
   });
 
-  $('body').on('click', '.icon', function(e) {
+  $('body').on('click', '.icon.trash', function(e) {
     e.stopPropagation();
+    $deleteNotice.modal({
+      escapeClose: false,
+      clickClose: false,
+      showClose: false
+    });
     let sortableId = $(this)
       .closest('.sortable')
         .eq(0)
         .attr('id');
 
-    let $job = $(this)
+    let jobId = $(this)
       .closest('.job-post')
-        .eq(0);
+        .eq(0)
+        .attr('id');
+
+    $deleteColumnId.val(sortableId);
+    $deleteJobId.val(jobId);
+  });
+
+  $deleteButton.click(function (e) {
+    e.preventDefault();
+    let $job = $(`#${$deleteJobId.val()}`);
+    let sortableId = $deleteColumnId.val();
 
     $job.remove();
     delete jobs[$job.attr('id')];
@@ -128,10 +148,14 @@ $(function() {
     columns[sortableId] = $(`#${sortableId}`).sortable('toArray');
     localStorage.setItem('columns', JSON.stringify(columns));
     localStorage.setItem('jobs', JSON.stringify(jobs));
-    
+    $.modal.close();
+  });
+
+  $nevermindButton.click(function (e) {
+    e.preventDefault();
+    $.modal.close();
   });
     
-
   $('body').on('click', '.add-job-button', function(e) {
     let sortableId = $(this)
       .closest('.list-container')
@@ -146,7 +170,22 @@ $(function() {
     
   });
 
+  $('body').on('mouseenter', '.icon', function (e) {
+    let color = $(this).closest('.job-post').css('background-color');
+    $(this).css({
+      color: color
+    })
+  });
+
+  $('body').on('mouseleave', '.icon', function (e) {
+    $(this).css({
+      color: 'white'
+    });
+  })
+
   $addSave.click(function(e) {
+
+    e.preventDefault();
 
     let sortableId = $addColumnId.val();
 
@@ -155,6 +194,7 @@ $(function() {
                      ${Math.floor(Math.random()*255)},
                      ${Math.floor(Math.random()*255)})`;
     let name = $addName.val();
+    if (!name) return;
     let info = { name, color }
     
     let $jobPost = createJobPost(jobId, info);
@@ -164,6 +204,11 @@ $(function() {
     columns[sortableId] = $(`#${sortableId}`).sortable('toArray');
     localStorage.setItem('columns', JSON.stringify(columns));
     localStorage.setItem('jobs', JSON.stringify(jobs));
+
+    $('input').val('');
+
+    $.modal.close();
+
   });
 
   $editSave.click(function(e) {
@@ -181,6 +226,7 @@ $(function() {
 
     localStorage.setItem('jobs', JSON.stringify(jobs));
 
+    $.modal.close();
   });
     
 });

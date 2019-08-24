@@ -41,18 +41,28 @@
   <template id='job-post-template'>
     <div class='job-post'>
       <span class='company-name'></span>
-      <div class="icon">
-          <i class="fa fa-trash" aria-hidden="true"></i>
-      </div>
+      <div class='icon-container'>
+        <div class="icon trash">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+        </div>
+        <div class="icon link">
+            <i class="fa fa-link" aria-hidden="true"></i>
+        </div>
+    </div>
     </div>
   </template>
+
+  <form id='delete-job-notice' class='modal'>
+    <input type="hidden" id='delete-job-id'>
+    <input type="hidden" id='delete-column-id'>
+    <p>Are you sure you want to delete this job?</p>
+    <button id='delete-button'>Yes, please</button><button id='nevermind-button'>Nevermind</button>
+  </form>
 
   <form id="add-form" class="modal">
       <input type="hidden" id='add-column-id'>
       Company Name:<br>
       <input type='text' name='companyname' id='add-name'><br>
-      Color:<br>
-      <!-- <input type='text' name='color' id='add-color'><br> -->
       <button id='add-save'>Save</button>
   </form>
 
