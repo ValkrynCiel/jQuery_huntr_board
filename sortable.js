@@ -7,14 +7,18 @@ $(function() {
   let $nevermindButton = $('#nevermind-button');
 
   let $addForm = $('#add-form');
-  let $addName = $('#add-name');
-  let $addSave = $('#add-save');
+  let $addCompany = $('#add-company');
+  let $addPosition = $('#add-position');
   let $addColumnId = $('#add-column-id');
+  let $addLink = $('#add-link');
+  let $addSave = $('#add-save');
 
   let $editForm = $('#edit-form');
-  let $editName = $('#edit-name');
+  let $editCompany = $('#edit-name');
+  let $editPosition = $('#edit-position');
   let $editColor = $('#edit-color');
   let $editSave = $('#edit-save');
+  let $editLink = $('#edit-link');
   let $editJobId = $('#edit-job-id');
 
   let jobs = localStorage.getItem('jobs') ? 
@@ -69,8 +73,26 @@ $(function() {
       .css({ 'background-color': info.color })
       .data({ info })
       .find('.company-name')
-        .html(info.name);
- 
+        .html(info.company);
+
+    $jobPost
+      .find('.position-name')
+        .html(info.position || 'No position listed');
+
+    if (info.link) {
+
+      let url = info.link.includes('http://') || info.link.includes('https://') ?
+      info.link : `http://${info.link}`
+
+      $jobPost.find('.icon-container').append(
+        `<a href='${url}' target='_blank'>
+          <div class="icon link">
+            <i class="fa fa-link" aria-hidden="true"></i>
+          </div>
+        </a>`
+      )
+    }
+
     return $jobPost
   }
 
@@ -106,15 +128,26 @@ $(function() {
 
     $editJobId
       .val($(this).attr('id'));
-    $editName
-      .val($(this).data('info').name);
+
+    let info = $(this).data('info');
+
+    $editCompany
+      .val(info.company);
+    $editPosition
+      .val(info.position);
     $editColor
-      .val($(this).data('info').color);
+      .val(info.color);
+    $editLink
+      .val(info.link)
 
     $editForm.modal({
       clickClose: false
     });
   });
+
+  $('body').on('click', '.job-post a', function (e) {
+    e.stopPropagation();
+  })
 
   $('body').on('click', '.icon.trash', function(e) {
     e.stopPropagation();
@@ -193,9 +226,12 @@ $(function() {
     let color = `rgb(${Math.floor(Math.random()*255)},
                      ${Math.floor(Math.random()*255)},
                      ${Math.floor(Math.random()*255)})`;
-    let name = $addName.val();
-    if (!name) return;
-    let info = { name, color }
+
+    let company = $addCompany.val();
+    if (!company) return;
+    let position = $addPosition.val();
+    let link = $addLink.val();
+    let info = { company, color, position, link }
     
     let $jobPost = createJobPost(jobId, info);
     $(`#${sortableId}`).append($jobPost);
@@ -215,10 +251,14 @@ $(function() {
     e.preventDefault();
 
     let color = $editColor.val();
-    let name = $editName.val();
+    let company = $editCompany.val();
+    let position = $editPosition.val();
+    let link = $editLink.val()
     let id = $editJobId.val();
 
-    let info = { color, name }
+    if (!company) return;
+    
+    let info = { color, company, position, link }
     jobs[id] = info;
 
     let $newJobPost = createJobPost(id, info);

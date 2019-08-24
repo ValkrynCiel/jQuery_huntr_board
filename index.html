@@ -40,15 +40,15 @@
 
   <template id='job-post-template'>
     <div class='job-post'>
-      <span class='company-name'></span>
+      <div class='company-information'>
+        <span class='company-name'></span>
+        <span class='position-name'></span>
+      </div>
       <div class='icon-container'>
         <div class="icon trash">
             <i class="fa fa-trash" aria-hidden="true"></i>
         </div>
-        <div class="icon link">
-            <i class="fa fa-link" aria-hidden="true"></i>
-        </div>
-    </div>
+      </div>
     </div>
   </template>
 
@@ -62,7 +62,11 @@
   <form id="add-form" class="modal">
       <input type="hidden" id='add-column-id'>
       Company Name:<br>
-      <input type='text' name='companyname' id='add-name'><br>
+      <input type='text' name='company' id='add-company'><br>
+      Position:<br>
+      <input type='text' name='position' id='add-position'><br>
+      Link:<br>
+      <input type='text' name='position' id='add-link'><br>
       <button id='add-save'>Save</button>
   </form>
 
@@ -70,6 +74,10 @@
       <input type="hidden" id='edit-job-id'>
       Company Name:<br>
       <input type='text' name='companyname' id='edit-name'><br>
+      Position:<br>
+      <input type='text' name='position' id='edit-position'><br>
+      Link:<br>
+      <input type='text' name='position' id='edit-link'><br>
       Color:<br>
       <input type='text' name='color' id='edit-color'><br>
       <button id='edit-save'>Save</button>
