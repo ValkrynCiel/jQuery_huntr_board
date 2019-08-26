@@ -85,19 +85,19 @@
       <input type="hidden" id='edit-job-id'>
       <div class='input-container'>
         <label>Company:</label>
-        <input type='text' name='company' id='edit-company' placeholder='required'><br>
+        <input type='text' name='company' id='edit-company' placeholder='required' autocomplete='off' onfocus='this.placeholder =""' onblur='this.placeholder = "required"'>
       </div>
       <div class='input-container'>
         <label>Position:</label>
-        <input type='text' name='position' id='edit-position' placeholder='+ add position'><br>
+        <input type='text' name='position' id='edit-position' placeholder='+ add position' autocomplete='off' onfocus='this.placeholder =""' onblur='this.placeholder = "+ add position"'>
       </div>
       <div class='input-container'>
         <label>Link:</label>
-        <input type='text' name='link' id='edit-link' placeholder='+ add link'><br> 
+        <input type='text' name='link' id='edit-link' placeholder='+ add link' autocomplete='off' onfocus='this.placeholder =""' onblur='this.placeholder = "+ add link"'> 
       </div>
       <div class='input-container'>
         <label>Color:</label>
-        <input type='text' name='color' id='edit-color'><br> 
+        <input type='text' name='color' id='edit-color' autocomplete='off'> 
       </div>
       <button id='edit-save'>Save</button>
   </form>

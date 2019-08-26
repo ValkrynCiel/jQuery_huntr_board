@@ -219,7 +219,7 @@ body {
   margin: 0 auto;
   margin-bottom: 10px; 
   background-color: rgb(201, 189, 223);
-  animation: color-me-in 1.6s infinite;
+  animation: color-me-in 1.6s, color-me-in 2.5s infinite;
 }
 
 .modal {

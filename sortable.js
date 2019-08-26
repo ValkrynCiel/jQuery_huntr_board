@@ -168,9 +168,7 @@ $(function() {
     $editLink
       .val(info.link)
 
-    $editForm.modal({
-      clickClose: false
-    });
+    $editForm.modal();
   });
 
   $('body').on('click', '.job-post a', function (e) {
@@ -225,9 +223,7 @@ $(function() {
 
     $addColumnId.val(sortableId);
 
-    $addForm.modal({
-      clickClose: false
-    });
+    $addForm.modal();
     
   });
 
