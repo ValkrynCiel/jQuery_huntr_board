@@ -135,7 +135,6 @@ body {
   font-size: 13px;
   z-index: -1;
 }
-
 .job-post .icon-container.is-dragging {
   z-index: -1;
 }
@@ -143,6 +142,8 @@ body {
 .job-post:hover .icon-container {
   z-index: 1;
 }
+
+
 
 .job-post .company-information { 
   position: absolute;
