@@ -136,7 +136,7 @@ body {
   z-index: -1;
 }
 .job-post .icon-container.is-dragging {
-  z-index: -1;
+  display: none;
 }
 
 .job-post:hover .icon-container {
