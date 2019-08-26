@@ -11,15 +11,13 @@ $(function() {
   let $addPosition = $('#add-position');
   let $addColumnId = $('#add-column-id');
   let $addLink = $('#add-link');
-  let $addSave = $('#add-save');
 
   let $editForm = $('#edit-form');
+  let $editJobId = $('#edit-job-id')
   let $editCompany = $('#edit-name');
   let $editPosition = $('#edit-position');
   let $editColor = $('#edit-color');
-  let $editSave = $('#edit-save');
   let $editLink = $('#edit-link');
-  let $editJobId = $('#edit-job-id');
 
   let jobs = localStorage.getItem('jobs') ? 
   JSON.parse(localStorage.getItem('jobs')) : {}
@@ -27,9 +25,24 @@ $(function() {
   let columns = localStorage.getItem('columns') ? 
   JSON.parse(localStorage.getItem('columns')) : {
     applied: [],
-    interview: [],
-    offer: []
+    phone: [],
+    onsite: [],
+    offer: [],
+    rejected: []
   }
+
+  function updateTimeDisplay () {
+ 
+    $('.job-post').each(function () {
+      $(this)
+        .find('.time')
+        .html(moment($(this).data().info.time).fromNow())
+    });
+
+    setTimeout(updateTimeDisplay, 60000);
+  }
+
+  setTimeout(updateTimeDisplay, 60000);
 
   function displayColumns() {
     for (let key in columns) {
@@ -79,6 +92,10 @@ $(function() {
       .find('.position-name')
         .html(info.position || 'No position listed');
 
+    $jobPost
+      .find('.time')
+        .html(moment(info.time).fromNow());
+
     if (info.link) {
 
       let url = info.link.includes('http://') || info.link.includes('https://') ?
@@ -86,8 +103,8 @@ $(function() {
 
       $jobPost.find('.icon-container').append(
         `<a href='${url}' target='_blank'>
-          <div class="icon link">
-            <i class="fa fa-link" aria-hidden="true"></i>
+          <div class="icon arrow">
+            <i class="fas fa-arrow-right"></i>
           </div>
         </a>`
       )
@@ -111,9 +128,20 @@ $(function() {
       }
     },
     receive: function (e , ui) {
+      let newTime = Date.now()
+      let $jobPost = ui.item;
+
+      $jobPost
+        .find('.time')
+        .html(moment(newTime).fromNow());
+
+      $jobPost.data().info.time = newTime;
+      jobs[$jobPost.attr('id')].time = newTime;
+
       let receiverId = $(this).attr('id');
 
       columns[receiverId] = $(`#${receiverId}`).sortable('toArray');
+      localStorage.setItem('jobs', JSON.stringify(jobs));
     },
     stop: function (e, ui) {
       let stopId = $(this).attr('id');
@@ -216,22 +244,21 @@ $(function() {
     });
   })
 
-  $addSave.click(function(e) {
+  $addForm.submit(function(e) {
 
     e.preventDefault();
 
     let sortableId = $addColumnId.val();
 
     let jobId = Date.now();
-    let color = `rgb(${Math.floor(Math.random()*255)},
-                     ${Math.floor(Math.random()*255)},
-                     ${Math.floor(Math.random()*255)})`;
+    let color = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
 
     let company = $addCompany.val();
     if (!company) return;
     let position = $addPosition.val();
     let link = $addLink.val();
-    let info = { company, color, position, link }
+
+    let info = { company, color, position, link, time: jobId }
     
     let $jobPost = createJobPost(jobId, info);
     $(`#${sortableId}`).append($jobPost);
@@ -247,7 +274,7 @@ $(function() {
 
   });
 
-  $editSave.click(function(e) {
+  $editForm.submit(function(e) {
     e.preventDefault();
 
     let color = $editColor.val();
@@ -258,10 +285,10 @@ $(function() {
 
     if (!company) return;
     
-    let info = { color, company, position, link }
-    jobs[id] = info;
+    let changedInfo = { color, company, position, link }
+    jobs[id] = { ...jobs[id], ...changedInfo };
 
-    let $newJobPost = createJobPost(id, info);
+    let $newJobPost = createJobPost(id, jobs[id]);
     $(`#${id}`).replaceWith($newJobPost);
 
     localStorage.setItem('jobs', JSON.stringify(jobs));
