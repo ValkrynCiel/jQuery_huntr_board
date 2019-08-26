@@ -72,7 +72,7 @@
 
   <form id="add-form" class="modal">
       <input type="hidden" id='add-column-id'>
-      Company Name:<br>
+      Company:<br>
       <input type='text' name='company' id='add-company'><br>
       Position:<br>
       <input type='text' name='position' id='add-position'><br>
@@ -83,14 +83,22 @@
 
   <form id="edit-form" class="modal">
       <input type="hidden" id='edit-job-id'>
-      Company Name:<br>
-      <input type='text' name='companyname' id='edit-name'><br>
-      Position:<br>
-      <input type='text' name='position' id='edit-position'><br>
-      Link:<br>
-      <input type='text' name='position' id='edit-link'><br>
-      Color:<br>
-      <input type='text' name='color' id='edit-color'><br>
+      <div class='input-container'>
+        <label>Company:</label>
+        <input type='text' name='company' id='edit-company' placeholder='required'><br>
+      </div>
+      <div class='input-container'>
+        <label>Position:</label>
+        <input type='text' name='position' id='edit-position' placeholder='+ add position'><br>
+      </div>
+      <div class='input-container'>
+        <label>Link:</label>
+        <input type='text' name='link' id='edit-link' placeholder='+ add link'><br> 
+      </div>
+      <div class='input-container'>
+        <label>Color:</label>
+        <input type='text' name='color' id='edit-color'><br> 
+      </div>
       <button id='edit-save'>Save</button>
   </form>
 </body>

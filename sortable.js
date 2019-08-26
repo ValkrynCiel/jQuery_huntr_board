@@ -14,7 +14,7 @@ $(function() {
 
   let $editForm = $('#edit-form');
   let $editJobId = $('#edit-job-id')
-  let $editCompany = $('#edit-name');
+  let $editCompany = $('#edit-company');
   let $editPosition = $('#edit-position');
   let $editColor = $('#edit-color');
   let $editLink = $('#edit-link');
