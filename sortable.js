@@ -118,7 +118,7 @@ $(function() {
     connectWith: ".sortable",
     opacity: 0.8,
     start: function (e, ui) {
-      ui.item.children('.icon-container').eq(0).toggleClass('is-dragging');
+      ui.item.eq(0).toggleClass('is-dragging');
     },
     over: function(e,ui) {
       if (ui.sender) {
@@ -148,7 +148,7 @@ $(function() {
       columns[stopId] = $(`#${stopId}`).sortable('toArray');
       
       localStorage.setItem('columns', JSON.stringify(columns));
-      ui.item.children('.icon-container').eq(0).toggleClass('is-dragging')
+      ui.item.eq(0).toggleClass('is-dragging')
     }
   });
 

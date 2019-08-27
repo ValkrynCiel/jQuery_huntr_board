@@ -126,6 +126,7 @@ body {
   color: white;
   box-shadow: 0px 4px 8px rgba(24,0,69,0.3);
   position: relative;
+  cursor: pointer;
 }
 
 .job-post .icon-container {
@@ -135,7 +136,11 @@ body {
   font-size: 13px;
   z-index: -1;
 }
-.job-post .icon-container.is-dragging {
+
+.job-post.is-dragging {
+  cursor: default;
+}
+.job-post.is-dragging .icon-container {
   display: none;
 }
 
@@ -187,7 +192,6 @@ body {
 }
 
 .job-post .icon:hover{
-  cursor: pointer;
   background-color: white;
 }
 
@@ -239,6 +243,7 @@ button:focus {
   font-size: 15px;
   border-radius: 8px;
   background-color: white;
+  transition: background-color .3s;
 }
 
 .modal button:hover {
@@ -264,7 +269,7 @@ button:focus {
   justify-content: space-between;
 }
 
-#edit-form button {
+#edit-form button, #add-form button {
   margin-top: 20px;
   float: right;
 }
@@ -301,6 +306,17 @@ button:focus {
   background-color: gainsboro;
 }
 
+form h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+form label, p {
+  color: rgba(85, 3, 85, 0.7)
+}
 @keyframes color-me-in {
   0% {
     background: rgb(213, 193, 248);
