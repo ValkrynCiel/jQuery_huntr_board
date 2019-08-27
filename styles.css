@@ -5,6 +5,7 @@
 
 * {
   box-sizing: border-box;
+  font-family: 'Lato', 'san-serif';
 }
 
 html, body, div, span, applet, object, iframe,
@@ -24,7 +25,6 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
   vertical-align: baseline;
 
 }
@@ -55,7 +55,6 @@ table {
 body {
   overflow-x: scroll;
   white-space: nowrap;
-  font-family: 'Lato', 'san-serif';
   
 }
 
@@ -287,7 +286,6 @@ button:focus {
 .input-container input {
   flex: 8;
   font-size: 18px;
-  font-family: 'Lato', 'san-serif';
   border: none;
   background-color: rgb(248, 239, 248);
   border-radius: 2px;
