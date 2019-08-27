@@ -168,7 +168,9 @@ $(function() {
     $editLink
       .val(info.link)
 
-    $editForm.modal();
+    $editForm.modal({
+      showClose: false
+    });
   });
 
   $('body').on('click', '.job-post a', function (e) {
@@ -178,8 +180,6 @@ $(function() {
   $('body').on('click', '.icon.trash', function(e) {
     e.stopPropagation();
     $deleteNotice.modal({
-      escapeClose: false,
-      clickClose: false,
       showClose: false
     });
     let sortableId = $(this)
@@ -223,7 +223,9 @@ $(function() {
 
     $addColumnId.val(sortableId);
 
-    $addForm.modal();
+    $addForm.modal({
+      showClose: false
+    });
     
   });
 
