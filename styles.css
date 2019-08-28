@@ -88,20 +88,32 @@ button:focus {
 
 .new-list-container {
   display: inline-flex;
-  width: 300px;
+  width: 320px;
   height: calc(100vh - 125px);
   border: rgb(140, 114, 189) solid 1px;
   background-color: rgb(215, 203, 238);
+  opacity: 0;
 }
 
 .list-order-container {
   float: left;
 }
 
-.new-list-button {
+#new-list-button {
   height: 100px;
-  width: 90%;
+  width: 80%;
   margin: 40px auto;
+  border-radius: 5px;
+  display: flex;
+  transition: background-color .3s;
+}
+
+#new-list-button:hover {
+  background-color: rgb(140, 114, 189, 0.4);
+}
+
+#new-list-button p {
+  margin: auto;
 }
 
 /* job list and sortable/placeholder styling */

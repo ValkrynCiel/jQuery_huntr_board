@@ -20,17 +20,27 @@ $(function() {
   let $editNotes = $('#edit-notes');
   let $editLink = $('#edit-link');
 
-  let jobs = localStorage.getItem('jobs') ? 
-  JSON.parse(localStorage.getItem('jobs')) : {}
+  let $listOrderContainer = $('.list-order-container');
+  let $newListButton = $('#new-list-button');
 
-  let lists = localStorage.getItem('lists') ? 
-  JSON.parse(localStorage.getItem('lists')) : {
-    applied: [],
-    phone: [],
-    onsite: [],
-    offer: [],
-    rejected: []
+  let savedJobs = localStorage.getItem('jobs')
+  let jobs = savedJobs ? JSON.parse(savedJobs) : {}
+
+  let savedLists = localStorage.getItem('lists');
+  let lists = savedLists ? JSON.parse(savedLists) : 
+  {
+    1: {name: 'applied', order:[]},
+    2: {name: 'phone screen', order:[]},
+    3: {name: 'onsite', order:[]},
+    4: {name: 'offer', order:[]},
+    5: {name: 'rejected', order:[]}
   }
+
+  let savedListOrder = localStorage.getItem('listOrder')
+
+  let listOrder = savedListOrder ? JSON.parse(savedListOrder) :
+  [1, 2, 3, 4, 5]
+  
 
   function updateTimeDisplay () {
  
@@ -46,48 +56,43 @@ $(function() {
   setTimeout(updateTimeDisplay, 60000);
 
   function displayLists() {
-    for (let key in lists) {
-
-      createList(key);
-      displayJobOrder(key);
+    for (let key of listOrder) {
+      
+      let { name, order } = lists[key]
+      createList(key, name);
+      displayJobOrder(key, order);
 
     }
 
-    $('.lists-display-container').append(`
-      <div class='new-list-container'>
-        <button class='new-list-button'>
-          + Add a new list
-        </button>
-      </div>
-    `)
+    $('.new-list-container').css('opacity', 1)
   }
 
   displayLists();
 
-  function displayJobOrder(list) {
-    let order = lists[list];
+  function displayJobOrder(listId, order) {
     
-    for (let id of order) {
+    for (let jobId of order) {
 
-      let jobInfo = jobs[id];
-      let $jobPost = createJobPost(id, jobInfo);
+      let jobInfo = jobs[jobId];
+      let $jobPost = createJobPost(jobId, jobInfo);
 
-      $(`#${list}`).append($jobPost);
+      $(`#${listId}`).append($jobPost);
     }; 
   }
 
-  function createList(key) {
+  function createList(listId, name) {
+    
     let $list = $($('#list-template').html());
 
       $list
         .find('.title')
-          .html(key.toUpperCase());
+          .html(name.toUpperCase());
 
       $list
         .find('.job-sortable')
-          .attr('id', key);
+          .attr('id', listId);
 
-      $('.list-order-container').append($list);
+      $listOrderContainer.append($list);
   }
 
   function createJobPost(id, info) {
@@ -153,12 +158,12 @@ $(function() {
 
       let receiverId = $(this).attr('id');
 
-      lists[receiverId] = $(`#${receiverId}`).sortable('toArray');
+      lists[receiverId].order = $(`#${receiverId}`).sortable('toArray');
       localStorage.setItem('jobs', JSON.stringify(jobs));
     },
     stop: function (e, ui) {
       let stopId = $(this).attr('id');
-      lists[stopId] = $(`#${stopId}`).sortable('toArray');
+      lists[stopId].order = $(`#${stopId}`).sortable('toArray');
       
       localStorage.setItem('lists', JSON.stringify(lists));
       ui.item.eq(0).toggleClass('is-dragging')
@@ -220,7 +225,7 @@ $(function() {
     $job.remove();
     delete jobs[$job.attr('id')];
 
-    lists[sortableId] = $(`#${sortableId}`).sortable('toArray');
+    lists[sortableId].order = $(`#${sortableId}`).sortable('toArray');
     localStorage.setItem('lists', JSON.stringify(lists));
     localStorage.setItem('jobs', JSON.stringify(jobs));
     $.modal.close();
@@ -246,6 +251,7 @@ $(function() {
   });
 
   $('body').on('mouseenter', '.icon', function (e) {
+    console.log($newListButton)
     let color = $(this).closest('.job-post').css('background-color');
     $(this).css({
       color: color
@@ -278,7 +284,7 @@ $(function() {
     $(`#${sortableId}`).append($jobPost);
 
     jobs[jobId] = info
-    lists[sortableId] = $(`#${sortableId}`).sortable('toArray');
+    lists[sortableId].order = $(`#${sortableId}`).sortable('toArray');
     localStorage.setItem('lists', JSON.stringify(lists));
     localStorage.setItem('jobs', JSON.stringify(jobs));
 
@@ -309,6 +315,16 @@ $(function() {
     localStorage.setItem('jobs', JSON.stringify(jobs));
 
     $.modal.close();
+  });
+
+  $newListButton.click(function () {
+    let newListId = Date.now();
+
+    listOrder.push(newListId);
+    lists[newListId] = {name: 'new', order: []};
+    $listOrderContainer.append(createList(newListId, 'new'));
+    localStorage.setItem('listOrder', JSON.stringify(listOrder));
+    localStorage.setItem('lists', JSON.stringify(lists));
   });
     
 });
