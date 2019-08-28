@@ -1,5 +1,7 @@
 $(function() {
 
+  let $body = $('body');
+
   let $deleteNotice = $('#delete-job-notice');
   let $deleteListId = $('#delete-list-id');
   let $deleteJobId = $('#delete-job-id');
@@ -29,11 +31,11 @@ $(function() {
   let savedLists = localStorage.getItem('lists');
   let lists = savedLists ? JSON.parse(savedLists) : 
   {
-    1: {name: 'applied', order:[]},
-    2: {name: 'phone screen', order:[]},
-    3: {name: 'onsite', order:[]},
-    4: {name: 'offer', order:[]},
-    5: {name: 'rejected', order:[]}
+    1: {title: 'applied', order:[]},
+    2: {title: 'phone screen', order:[]},
+    3: {title: 'onsite', order:[]},
+    4: {title: 'offer', order:[]},
+    5: {title: 'rejected', order:[]}
   }
 
   let savedListOrder = localStorage.getItem('listOrder')
@@ -58,8 +60,8 @@ $(function() {
   function displayLists() {
     for (let key of listOrder) {
       
-      let { name, order } = lists[key]
-      createList(key, name);
+      let { title, order } = lists[key]
+      createList(key, title);
       displayJobOrder(key, order);
 
     }
@@ -80,13 +82,13 @@ $(function() {
     }; 
   }
 
-  function createList(listId, name) {
+  function createList(listId, title) {
     
     let $list = $($('#list-template').html());
 
       $list
-        .find('.title')
-          .html(name.toUpperCase());
+        .find('.list-title')
+          .val(title);
 
       $list
         .find('.job-sortable')
@@ -170,7 +172,7 @@ $(function() {
     }
   });
 
-  $('body').on('click', '.job-post', function(e) {
+  $body.on('click', '.job-post', function(e) {
 
     $editJobId
       .val($(this).attr('id'));
@@ -194,11 +196,11 @@ $(function() {
 
   });
 
-  $('body').on('click', '.job-post a', function (e) {
+  $body.on('click', '.job-post a', function (e) {
     e.stopPropagation();
   })
 
-  $('body').on('click', '.icon.trash', function(e) {
+  $body.on('click', '.icon.trash', function(e) {
     e.stopPropagation();
     $deleteNotice.modal({
       showClose: false
@@ -236,7 +238,7 @@ $(function() {
     $.modal.close();
   });
     
-  $('body').on('click', '.add-job-button', function(e) {
+  $body.on('click', '.add-job-button', function(e) {
     let sortableId = $(this)
       .closest('.list-container')
       .children('.job-sortable')
@@ -250,18 +252,28 @@ $(function() {
     
   });
 
-  $('body').on('mouseenter', '.icon', function (e) {
-    console.log($newListButton)
+  $body.on('mouseenter', '.icon', function (e) {
     let color = $(this).closest('.job-post').css('background-color');
     $(this).css({
       color: color
     })
   });
 
-  $('body').on('mouseleave', '.icon', function (e) {
+  $body.on('mouseleave', '.icon', function (e) {
     $(this).css({
       color: 'white'
     });
+  });
+
+  $body.on('blur', '.list-title', function (e) {
+    let title = $(this).val();
+    let listId = $(this)
+      .closest('.list-container')
+        .children('.job-sortable')
+        .eq(0).attr('id');
+
+    lists[listId].title = title;
+    localStorage.setItem('lists', JSON.stringify(lists)); 
   })
 
   $addForm.submit(function(e) {
@@ -321,10 +333,11 @@ $(function() {
     let newListId = Date.now();
 
     listOrder.push(newListId);
-    lists[newListId] = {name: 'new', order: []};
-    $listOrderContainer.append(createList(newListId, 'new'));
+    lists[newListId] = {title: '', order: []};
+    $listOrderContainer.append(createList(newListId, ''));
     localStorage.setItem('listOrder', JSON.stringify(listOrder));
     localStorage.setItem('lists', JSON.stringify(lists));
   });
+
     
 });

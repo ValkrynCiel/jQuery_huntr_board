@@ -70,7 +70,7 @@ button:focus {
   width: 100vw;
   box-shadow: 3px 3px 6px rgba(140, 114, 189, 0.6);
   display: flex;
-  background-image: linear-gradient( 103deg,  rgba(235,225,188,0.5) 7.2%, rgba(232,188,234,0.5) 57.5%, rgba(203,209,244,0.5) 90.7% );
+  background-image: linear-gradient( 103deg,  rgba(235,225,188,0.7) 7.2%, rgba(232,188,234,0.7) 57.5%, rgba(203,209,244,0.7) 90.7% );
 }
 
 .header h1 {
@@ -91,6 +91,7 @@ button:focus {
   width: 320px;
   height: calc(100vh - 125px);
   border: rgb(140, 114, 189) solid 1px;
+  border-top: 0px;
   background-color: rgb(215, 203, 238);
   opacity: 0;
 }
@@ -106,6 +107,7 @@ button:focus {
   border-radius: 5px;
   display: flex;
   transition: background-color .3s;
+  cursor: pointer;
 }
 
 #new-list-button:hover {
@@ -158,7 +160,7 @@ button:focus {
   }
 }
 
-/* job list title */
+/* list title */
 
 .title-wrapper {
   width: 100%;
@@ -166,10 +168,28 @@ button:focus {
   display: flex;
 }
 
-.title-wrapper .title {
+.title-wrapper .list-title {
   margin: auto;
   font-size: 20px;
   font-weight: 400;
+  text-align: center;
+  color: rgb(85, 3, 85);
+  font-family: 'Lato', 'san-serif';
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 5px 10px;
+  border: none;
+  background-color: rgb(215, 203, 238);
+  transition: background-color .3s;
+}
+
+.title-wrapper .list-title:focus {
+  outline: none;
+  background-color: rgb(248, 239, 248);
+}
+
+.title-wrapper .list-title:hover {
+  background-color: rgb(248, 239, 248);
 }
 
 /* add job button */
@@ -394,9 +414,8 @@ button:focus {
   border: none;
   background-color: rgb(248, 239, 248);
   border-radius: 2px;
-  padding-left: 10px;
-  color: rgba(74,74,74,0.7);
   padding: 5px 10px;
+  color: rgba(74,74,74,0.7);
   transition: background-color .3s;
 }
 
