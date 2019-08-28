@@ -274,7 +274,12 @@ $(function() {
 
     lists[listId].title = title;
     localStorage.setItem('lists', JSON.stringify(lists)); 
-  })
+  });
+
+  $body.on('keypress', '.list-title', function (e) {
+    let keycode = (event.keyCode ? event.keyCode : event.which);
+    if (keycode == '13') $(this).blur();
+  });
 
   $addForm.submit(function(e) {
 
