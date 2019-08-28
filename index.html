@@ -114,7 +114,7 @@
 
   <!-- modal for editing job info -->
   <form id="edit-form" class="modal">
-      <header>Edit information</header>
+      <header>Job information</header>
       <input type="hidden" id='edit-job-id'>
       <div class='input-container'>
         <label>Company:</label>
@@ -132,6 +132,13 @@
         <label>Color:</label>
         <input type='text' name='color' id='edit-color' autocomplete='off'> 
       </div>
+
+      
+      <div class='notes-section'>
+        <label>Notes:</label><br>
+        <textarea rows=6 type='text' name='notes' id='edit-notes' autocomplete='off'></textarea>
+      </div>
+      
       <button id='edit-save'>Save</button>
   </form>
 </body>

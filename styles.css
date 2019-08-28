@@ -367,7 +367,13 @@ button:focus {
   flex: 3;
 }
 
-.modal .input-container input {
+.modal .notes-section {
+  padding-top: 10px;
+  border-top: 2px solid rgba(140, 114, 189, 0.3);
+  margin-top: 10px;
+}
+
+.modal .input-container input, .modal textarea {
   flex: 8;
   font-size: 18px;
   border: none;
@@ -379,11 +385,19 @@ button:focus {
   transition: background-color .3s;
 }
 
+.modal textarea {
+  margin-top: 10px;
+  font-size: 13px;
+  border: rgb(140, 114, 189) solid 1px; 
+  transition: background-color .3s;
+  width: 100%;
+}
+
 .modal .input-container input:hover {
   background-color: gainsboro;
 }
 
-.modal .input-container input:focus {
+.modal .input-container input:focus, .modal textarea:focus {
   outline: none;
   background-color: gainsboro;
 }

@@ -17,6 +17,7 @@ $(function() {
   let $editCompany = $('#edit-company');
   let $editPosition = $('#edit-position');
   let $editColor = $('#edit-color');
+  let $editNotes = $('#edit-notes');
   let $editLink = $('#edit-link');
 
   let jobs = localStorage.getItem('jobs') ? 
@@ -169,7 +170,7 @@ $(function() {
     $editJobId
       .val($(this).attr('id'));
 
-    let { company, position, color, link } = $(this).data('info');
+    let { company, position, color, link, notes } = $(this).data('info');
 
     $editCompany
       .val(company);
@@ -178,11 +179,14 @@ $(function() {
     $editColor
       .val(color);
     $editLink
-      .val(link)
+      .val(link);
+    $editNotes
+      .val(notes);
 
     $editForm.modal({
       showClose: false
     });
+
   });
 
   $('body').on('click', '.job-post a', function (e) {
@@ -268,7 +272,7 @@ $(function() {
     let position = $addPosition.val();
     let link = $addLink.val();
 
-    let info = { company, color, position, link, time: jobId }
+    let info = { company, color, position, link, time: jobId, notes: '' }
     
     let $jobPost = createJobPost(jobId, info);
     $(`#${sortableId}`).append($jobPost);
@@ -292,10 +296,11 @@ $(function() {
     let position = $editPosition.val();
     let link = $editLink.val()
     let id = $editJobId.val();
+    let notes = $editNotes.val();
 
     if (!company) return;
     
-    let changedInfo = { color, company, position, link }
+    let changedInfo = { color, company, position, link, notes }
     jobs[id] = { ...jobs[id], ...changedInfo };
 
     let $newJobPost = createJobPost(id, jobs[id]);
