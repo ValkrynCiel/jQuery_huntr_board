@@ -79,27 +79,28 @@ $(function() {
   }
 
   function createJobPost(id, info) {
-    let $jobPost = $($('#job-post-template').html())
+    let $jobPost = $($('#job-post-template').html());
+    let { color, company, position, link, time } = info
 
     $jobPost
       .attr('id', id)
-      .css({ 'background-color': info.color })
+      .css({ 'background-color': color })
       .data({ info })
       .find('.company-name')
-        .html(info.company);
+        .html(company);
 
     $jobPost
       .find('.position-name')
-        .html(info.position || 'No position listed');
+        .html(position || 'position not listed');
 
     $jobPost
       .find('.time')
-        .html(moment(info.time).fromNow());
+        .html(moment(time).fromNow());
 
-    if (info.link) {
+    if (link) {
 
-      let url = info.link.includes('http://') || info.link.includes('https://') ?
-      info.link : `http://${info.link}`
+      let url = link.includes('http://') || link.includes('https://') ?
+      link : `http://${link}`
 
       $jobPost.find('.icon-container').append(
         `<a href='${url}' target='_blank'>
@@ -157,16 +158,16 @@ $(function() {
     $editJobId
       .val($(this).attr('id'));
 
-    let info = $(this).data('info');
+    let { company, position, color, link } = $(this).data('info');
 
     $editCompany
-      .val(info.company);
+      .val(company);
     $editPosition
-      .val(info.position);
+      .val(position);
     $editColor
-      .val(info.color);
+      .val(color);
     $editLink
-      .val(info.link)
+      .val(link)
 
     $editForm.modal({
       showClose: false

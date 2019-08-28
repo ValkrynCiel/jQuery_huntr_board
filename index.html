@@ -26,7 +26,7 @@
   <script defer src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js'></script>
 
   <script src="https://kit.fontawesome.com/104a95d191.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=fallback" rel="stylesheet">
   <script defer src='sortable.js'></script>
   
   <link rel="stylesheet" href="styles.css">
@@ -34,6 +34,8 @@
 
 </head>
 <body>
+
+  <!-- template for dynamically creating columns -->
   <template id='column-template'>
     <div class='list-container'>
         <div class='title-wrapper'>
@@ -46,6 +48,7 @@
     </div>
   </template>
 
+  <!-- template for dynmaically creating job posts -->
   <template id='job-post-template'>
     <div class='job-post'>
 
