@@ -6,23 +6,30 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Hunty Board</title>
 
-  <script 
+  <!-- jQuery and jquery-ui sortable  -->
+  <script defer
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-  <script 
+  <script defer
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
   integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
   crossorigin="anonymous"></script>
-  <script  
+
+  <!-- jquery-modal + css -->
+  <script defer
   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-  <script  src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js'></script>
-  <script  src="https://kit.fontawesome.com/104a95d191.js"></script>
+
+  <!-- momentjs -->
+  <script defer src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js'></script>
+
+  <script src="https://kit.fontawesome.com/104a95d191.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <script defer src='sortable.js'></script>
   
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
   <link rel="icon" href="img/favicon-32x32.png" type='image'>
 
 </head>
@@ -30,7 +37,7 @@
   <template id='column-template'>
     <div class='list-container'>
         <div class='title-wrapper'>
-          <h3 class='title'></h3>
+          <h1 class='title'></h1>
         </div>
         <div class='add-job-wrapper'>
           <div class='add-job-button'><p>+</p></div>
@@ -61,6 +68,9 @@
     </div>
   </template>
 
+  
+  <!-- modal for deleting jobs -->
+
   <form id='delete-job-notice' class='modal'>
     <h2>Delete a job</h2>
     <input type="hidden" id='delete-job-id'>
@@ -72,6 +82,7 @@
     </div>
   </form>
 
+  <!-- modal for adding jobs -->
   <form id="add-form" class="modal">
       <h2>Add a job</h2>
       <input type="hidden" id='add-column-id'>
@@ -90,6 +101,7 @@
       <button id='add-save'>Save</button>
   </form>
 
+  <!-- modal for editing job info -->
   <form id="edit-form" class="modal">
       <h2>Edit information</h2>
       <input type="hidden" id='edit-job-id'>

@@ -1,11 +1,11 @@
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
+   CSS Reset
 */
 
 * {
   box-sizing: border-box;
-  font-family: 'Lato', 'san-serif';
 }
 
 html, body, div, span, applet, object, iframe,
@@ -26,7 +26,6 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
   vertical-align: baseline;
-
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -52,12 +51,21 @@ table {
 	border-spacing: 0;
 }
 
+/* end of css reset  */
+
+
 body {
   overflow-x: scroll;
   white-space: nowrap;
-  
+  font-family: 'Lato', 'san-serif';
+  background-color: rgb(248, 239, 248);
 }
 
+button:focus {
+  outline: none;
+}
+
+/* job list and sortable/placeholder styling */
 .list-container {
   height: 100vh;
   width: 300px;
@@ -68,6 +76,50 @@ body {
   color: rgb(85, 3, 85);
   flex-direction: column;
 }
+
+.list-container .sortable { 
+  width: 90%; 
+  margin: 0 auto;
+  overflow-y: scroll;
+  flex: 1;
+  margin-bottom: 5px;
+}
+
+.list-container .placeholder { 
+  font-size: 1.4em; 
+  width: 95%;
+  height: 85px;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-bottom: 10px; 
+  background-color: rgb(213, 193, 248);
+  animation: color-me-in 1.6s, color-me-in 2.5s infinite;
+}
+
+@keyframes color-me-in {
+  0% {
+    background: rgb(213, 193, 248);
+    
+  }
+  100% {
+    background: rgb(204, 172, 255);
+  }
+}
+
+/* job list title */
+
+.title-wrapper {
+  width: 100%;
+  height: 120px;
+  display: flex;
+}
+
+.title-wrapper .title {
+  margin: auto;
+  font-size: 20px;
+}
+
+/* add job button */
 
 .add-job-wrapper {
   height: 60px;
@@ -96,24 +148,8 @@ body {
   font-size: 25px;
 }
 
-.title-wrapper {
-  width: 100%;
-  height: 120px;
-  display: flex;
-}
+/* job post */
 
-.title-wrapper h3 {
-  margin: auto;
-  font-size: 20px;
-}
-
-.sortable { 
-  width: 90%; 
-  margin: 0 auto;
-  overflow-y: scroll;
-  flex: 1;
-  margin-bottom: 5px;
-}
 
 .job-post { 
   width: 95%;
@@ -128,39 +164,68 @@ body {
   cursor: pointer;
 }
 
+/* job post icon container */
+
 .job-post .icon-container {
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 13px;
-  z-index: -1;
+  opacity: 0;
 }
+
+.job-post:hover .icon-container {
+  opacity: 1;
+}
+
+/* icons */
+
+.job-post .icon-container .icon {
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  border: 1px solid white;
+  display: flex;
+}
+
+.job-post .icon-container .icon i {
+  
+  display: block;
+  margin: auto;
+}
+
+.job-post .icon-container .icon:hover{
+  background-color: white;
+}
+
+.job-post .icon-container .icon.trash {
+  margin-bottom: 6px;
+}
+
+.job-post .icon-container a {
+  text-decoration: none;
+  color: white;
+}
+
+
+/* job post dragging behavior */
+
 
 .job-post.is-dragging {
   cursor: default;
 }
+
 .job-post.is-dragging .icon-container {
-  display: none;
+  opacity: 0;
 }
 
-.job-post:hover .icon-container {
-  z-index: 1;
-}
-
-
+/* job post company info (name and position) */
 
 .job-post .company-information { 
   position: absolute;
   left: 10px;
   top: 10px;
   width: 80%;
-}
-
-.job-post .time-container {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  font-size: 11px;
 }
 
 .job-post .company-information span {
@@ -181,59 +246,22 @@ body {
   height: 18px;
 }
 
+/* timestamp */
 
-.job-post .icon {
-  height: 23px;
-  width: 23px;
-  border-radius: 50%;
-  border: 1px solid white;
-  display: flex;
+.job-post .time-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 11px;
 }
 
-.job-post .icon:hover{
-  background-color: white;
-}
-
-.job-post .icon.trash {
-  margin-bottom: 6px;
-}
-
-
-.job-post .icon i {
-  
-  display: block;
-  margin: auto;
-}
-
-.job-post .icon-container a {
-  text-decoration: none;
-  color: white;
-}
-
-.highlight { 
-  background-color: yellow
-}
-
-.placeholder { 
-  font-size: 1.4em; 
-  width: 95%;
-  height: 85px;
-  border-radius: 4px;
-  margin: 0 auto;
-  margin-bottom: 10px; 
-  background-color: rgb(201, 189, 223);
-  animation: color-me-in 1.6s, color-me-in 2.5s infinite;
-}
+/* modal styling */
 
 .modal {
   background-color: rgb(248, 239, 248); 
   box-shadow: 0 0 4px #000;
   color: rgb(85, 3, 85);
   font-size: 20px;
-}
-
-button:focus {
-  outline: none;
 }
 
 .modal button {
@@ -252,9 +280,25 @@ button:focus {
 
 }
 
+.modal h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.modal label, .modal p {
+  color: rgba(85, 3, 85, 0.7)
+}
+
+/* styling to darken screen around modals */
+
 .blocker {
   background-color: rgba(0,0,0,0.5);
 }
+
+/* delete job notice */
 
 #delete-job-notice p {
   margin-bottom: 20px;
@@ -268,22 +312,24 @@ button:focus {
   justify-content: space-between;
 }
 
+/* edit and add forms */
+
 #edit-form button, #add-form button {
   margin-top: 20px;
   float: right;
 }
 
-.input-container {
+.modal .input-container {
   display: flex;
   margin-bottom: 5px;
   align-items: center;
 }
 
-.input-container label {
+.modal .input-container label {
   flex: 3;
 }
 
-.input-container input {
+.modal .input-container input {
   flex: 8;
   font-size: 18px;
   border: none;
@@ -295,33 +341,13 @@ button:focus {
   transition: background-color .3s;
 }
 
-.input-container input:hover {
+.modal .input-container input:hover {
   background-color: gainsboro;
 }
 
-.input-container input:focus {
+.modal .input-container input:focus {
   outline: none;
   background-color: gainsboro;
 }
 
-form h2 {
-  font-size: 30px;
-  font-weight: 600;
-  margin: auto;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-form label, p {
-  color: rgba(85, 3, 85, 0.7)
-}
-@keyframes color-me-in {
-  0% {
-    background: rgb(213, 193, 248);
-    
-  }
-  100% {
-    background: rgb(204, 172, 255);
-  }
-}
 
