@@ -116,8 +116,8 @@ $(function() {
 
       $jobPost.find('.icon-container').append(
         `<a href='${url}' target='_blank'>
-          <div class="icon arrow">
-            <i class="fas fa-arrow-right"></i>
+          <div class="icon link">
+            <i class="fas fa-external-link-square-alt"></i>
           </div>
         </a>`
       )
