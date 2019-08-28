@@ -394,6 +394,7 @@ button:focus {
   border: rgb(140, 114, 189) solid 1px; 
   transition: background-color .3s;
   width: 100%;
+  resize: none;
 }
 
 .modal .input-container input:hover {
