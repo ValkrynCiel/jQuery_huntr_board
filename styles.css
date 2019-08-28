@@ -76,7 +76,8 @@ button:focus {
 .header h1 {
   margin: auto 40px;
   font-size: 50px;
-  color: rgb(85, 3, 85)
+  color: rgb(85, 3, 85);
+  font-weight: 400;
 }
 
 .lists-display-container {
