@@ -157,6 +157,7 @@ button:focus {
 .title-wrapper .title {
   margin: auto;
   font-size: 20px;
+  font-weight: 400;
 }
 
 /* add job button */
