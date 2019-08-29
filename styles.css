@@ -89,6 +89,12 @@ button:focus {
   white-space: nowrap;
 }
 
+.list-order-container {
+  float: left;
+  display: flex;
+  flex-direction: row;
+}
+
 .new-list-container {
   display: inline-flex;
   width: 320px;
