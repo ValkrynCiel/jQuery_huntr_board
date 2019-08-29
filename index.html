@@ -27,18 +27,18 @@
 
   <script src="https://kit.fontawesome.com/104a95d191.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Lato&display=fallback" rel="stylesheet">
-  <script defer src='sortable.js'></script>
-  
+  <script defer src='DOM.js'></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="img/favicon-32x32.png" type='image'>
 
 </head>
 <body>
-  <header class='header'>
+
+  <header class='banner'>
     <h1>Hunty Board</h1>
   </header>
   
-    <div class='lists-display-container'>
+    <div class='list-display-container'>
       <div class='list-order-container' id='list-order-container'></div>
       <div class='new-list-container'>
           <div class='new-list-button' id='new-list-button'>
@@ -51,7 +51,7 @@
   <!-- template for dynamically creating columns -->
   <template id='list-template'>
     <div class='list-container'>
-        <header class='title-wrapper'>
+        <header class='list-header'>
           <i class="fas fa-arrows-alt-h"></i>
           <input type='text' class='list-title' placeholder='list title'>
         </header>
@@ -118,7 +118,7 @@
       <button id='add-save'>Save</button>
   </form>
 
-  <!-- modal for editing job info -->
+  <!-- modal for viewing and editing job info -->
   <form id="edit-form" class="modal edit-form">
       <header>Job information</header>
       <input type="hidden" id='edit-job-id'>

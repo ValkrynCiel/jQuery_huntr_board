@@ -64,7 +64,8 @@ button:focus {
   outline: none;
 }
 
-.header {
+/* banner at the top of the page */
+.banner {
   position: relative;
   height: 125px;
   width: 100vw;
@@ -74,14 +75,15 @@ button:focus {
   z-index: 3;
 }
 
-.header h1 {
+.banner h1 {
   margin: auto 40px;
   font-size: 50px;
   color: rgb(85, 3, 85);
   font-weight: 400;
 }
 
-.lists-display-container {
+/* container for lists and section to create new lists */
+.list-display-container {
   width: 100vw;
   overflow-x: scroll;
   white-space: nowrap;
@@ -95,12 +97,6 @@ button:focus {
   border-top: 0px;
   background-color: rgb(215, 203, 238);
   opacity: 0;
-}
-
-.list-order-container {
-  float: left;
-  display: flex;
-  flex-direction: row;
 }
 
 .new-list-button {
@@ -121,7 +117,7 @@ button:focus {
   margin: auto;
 }
 
-/* job list and sortable styling */
+/* list and sortable styling */
 .list-container {
   height: calc(100vh - 125px);
   width: 325px;
@@ -148,16 +144,18 @@ button:focus {
   margin-bottom: 5px;
 }
 
-/* list title */
+/* header for list container */
 
-.title-wrapper {
+.list-header {
   width: 100%;
   height: 150px;
   display: flex;
   position: relative;
 }
 
-.title-wrapper i {
+/* icon for sorting list */
+
+.list-header i {
   position: absolute;
   right: 20px;
   top: 20px;
@@ -167,11 +165,13 @@ button:focus {
   transition: opacity .5s;
 }
 
-.title-wrapper:hover i {
+.list-header:hover i {
   opacity: 1;
 }
 
-.title-wrapper .list-title {
+/* list title and input */
+
+.list-header .list-title {
   margin: auto;
   font-size: 20px;
   font-weight: 400;
@@ -186,12 +186,12 @@ button:focus {
   transition: background-color .3s;
 }
 
-.title-wrapper .list-title:focus {
+.list-header .list-title:focus {
   outline: none;
   background-color: rgb(248, 239, 248);
 }
 
-.title-wrapper .list-title:hover {
+.list-header .list-title:hover {
   background-color: rgb(248, 239, 248);
 }
 
@@ -240,7 +240,7 @@ button:focus {
   cursor: pointer;
 }
 
-.list-container .job-placeholder { 
+.job-placeholder { 
   font-size: 1.4em; 
   width: 90%;
   height: 90px;
@@ -285,8 +285,7 @@ button:focus {
   display: flex;
 }
 
-.job-post .icon-container .icon i {
-  
+.job-post .icon-container .icon i { 
   display: block;
   margin: auto;
 }
@@ -362,6 +361,7 @@ button:focus {
   z-index: 5;
 }
 
+/* buttons (save, delete, nevermind) */
 .modal button {
   height: 35px;
   width: 100px;
@@ -390,7 +390,7 @@ button:focus {
   color: rgba(85, 3, 85, 0.7)
 }
 
-/* styling to darken screen around modals */
+/* styling for dark screen around modals */
 
 .blocker {
   background-color: rgba(0,0,0,0.5);
