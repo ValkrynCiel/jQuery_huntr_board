@@ -152,6 +152,7 @@ $(function() {
     placeholder: 'job-placeholder',
     connectWith: ".job-sortable",
     opacity: 0.8,
+    zIndex: 2,
     start: function (e, ui) {
       ui.item.eq(0).toggleClass('is-dragging');
     },

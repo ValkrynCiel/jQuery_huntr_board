@@ -71,7 +71,7 @@ button:focus {
   box-shadow: 3px 3px 6px rgba(140, 114, 189, 0.6);
   display: flex;
   background-image: linear-gradient( 103deg,  rgba(235,225,188,0.7) 7.2%, rgba(232,188,234,0.7) 57.5%, rgba(203,209,244,0.7) 90.7% );
-  z-index: 10000;
+  z-index: 3;
 }
 
 .header h1 {
@@ -340,6 +340,7 @@ button:focus {
   box-shadow: 0 0 4px #000;
   color: rgb(85, 3, 85);
   font-size: 20px;
+  z-index: 5;
 }
 
 .modal button {
@@ -374,6 +375,7 @@ button:focus {
 
 .blocker {
   background-color: rgba(0,0,0,0.5);
+  z-index: 4;
 }
 
 /* delete job notice */
