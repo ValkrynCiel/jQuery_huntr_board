@@ -54,7 +54,6 @@ $(function() {
     }
     // this container is hidden to avoid flashing on load
     $('.new-list-container').css('opacity', 1);
-    saveToLocalStorage({ jobs, lists, listOrder });
   }
 
   /** fills list template with information title and id info*/
@@ -140,8 +139,7 @@ $(function() {
     },
     stop: function (e, ui) {
       ui.item.toggleClass('is-dragging');
-      listOrder = $listOrderContainer.sortable('toArray');
-      saveToLocalStorage({ listOrder }); 
+      saveListOrder($listOrderContainer.sortable('toArray'));
     }
   });
 
@@ -173,15 +171,13 @@ $(function() {
         .html(moment(time).fromNow());
 
       $jobPost.data().info.time = time;
-      saveJobInfo($jobPost.attr('id'), { time });
 
       let $list = $(this).closest('.list-container');
       let $sortable = $list.children('.job-sortable').eq(0);
-
       let order = $sortable.sortable('toArray');
 
+      saveJobInfo($jobPost.attr('id'), { time });
       saveListInfo($list.attr('id'), { order });
-      saveToLocalStorage({ jobs });
     },
     stop: function (e, ui) {
       // updates state when finished dragging
@@ -190,7 +186,6 @@ $(function() {
       let order = $sortable.sortable('toArray')
 
       saveListInfo($list.attr('id'), { order })
-      saveToLocalStorage({ lists });
       ui.item.eq(0).toggleClass('is-dragging')
     }
   });
@@ -201,14 +196,12 @@ $(function() {
   $newListButton.click(function () {
 
     let listId = Date.now();
-    
-    listOrder.push(listId);
     let listInfo = {title: '', order: []};
 
     $listOrderContainer.append(createList(listId, ''));
 
     saveListInfo(listId, listInfo);
-    saveToLocalStorage({ listOrder });
+    saveListOrder($listOrderContainer.sortable('toArray'));
 
   });
 
@@ -376,9 +369,7 @@ $(function() {
     $job.remove();
 
     // state removal
-    let order = $sortable.sortable('toArray')
-    deleteJobInfo($job.attr('id'));
-    saveListInfo($list.attr('id'), { order });
+    deleteJob($job.attr('id'), $list.attr('id'));
 
     $.modal.close();
   });
