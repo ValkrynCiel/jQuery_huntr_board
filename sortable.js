@@ -139,16 +139,15 @@ $(function() {
   }
 
   $listOrderContainer.sortable({
-    axis: 'x',
     tolerance: 'pointer',
-    handle: '.title-wrapper',
+    handle: '.fa-arrows-alt-h',
+    helper: 'clone',
     start: function (e, ui) {
-      ui.helper.toggleClass('is-dragging')
-    },
-    beforeStop: function (e, ui) {
       ui.helper.toggleClass('is-dragging');
+      ui.item.toggleClass('is-dragging');
     },
     stop: function (e, ui) {
+      ui.item.toggleClass('is-dragging');
       let listOrder = $listOrderContainer.sortable('toArray');
       localStorage.setItem('listOrder', JSON.stringify(listOrder)); 
     }
@@ -294,8 +293,7 @@ $(function() {
     let title = $(this).val();
     let listId = $(this)
       .closest('.list-container')
-        .children('.job-sortable')
-        .eq(0).attr('id');
+      .attr('id');
 
     lists[listId].title = title;
     localStorage.setItem('lists', JSON.stringify(lists)); 
