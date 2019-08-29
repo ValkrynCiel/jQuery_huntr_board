@@ -56,7 +56,7 @@ table {
 
 body {
   font-family: 'Lato', 'san-serif';
-  background-color: rgb(248, 239, 248);
+  background-color: rgba(232,188,234,0.5);
   overflow: hidden;
 }
 
@@ -71,6 +71,7 @@ button:focus {
   box-shadow: 3px 3px 6px rgba(140, 114, 189, 0.6);
   display: flex;
   background-image: linear-gradient( 103deg,  rgba(235,225,188,0.7) 7.2%, rgba(232,188,234,0.7) 57.5%, rgba(203,209,244,0.7) 90.7% );
+  z-index: 10000;
 }
 
 .header h1 {
@@ -98,9 +99,11 @@ button:focus {
 
 .list-order-container {
   float: left;
+  display: flex;
+  flex-direction: row;
 }
 
-#new-list-button {
+.new-list-button {
   height: 100px;
   width: 80%;
   margin: 40px auto;
@@ -110,19 +113,19 @@ button:focus {
   cursor: pointer;
 }
 
-#new-list-button:hover {
+.new-list-button:hover {
   background-color: rgb(140, 114, 189, 0.4);
 }
 
-#new-list-button p {
+.new-list-button p {
   margin: auto;
 }
 
-/* job list and sortable/placeholder styling */
+/* job list and sortable styling */
 .list-container {
   height: calc(100vh - 125px);
-  width: 300px;
-  display: inline-flex;
+  width: 325px;
+  display: flex;
   background-color:rgb(215, 203, 238); 
   user-select: none;
   border: rgb(140, 114, 189) solid 1px;
@@ -139,26 +142,7 @@ button:focus {
   margin-bottom: 5px;
 }
 
-.list-container .job-placeholder { 
-  font-size: 1.4em; 
-  width: 95%;
-  height: 85px;
-  border-radius: 4px;
-  margin: 0 auto;
-  margin-bottom: 10px; 
-  background-color: rgb(213, 193, 248);
-  animation: color-me-in 1.6s, color-me-in 2.5s infinite;
-}
 
-@keyframes color-me-in {
-  0% {
-    background: rgb(213, 193, 248);
-    
-  }
-  100% {
-    background: rgb(204, 172, 255);
-  }
-}
 
 /* list title */
 
@@ -199,7 +183,7 @@ button:focus {
 }
 
 .add-job-button {
-  width: 90%;
+  width: 85%;
   height: 35px;
   background-color: rgb(248, 239, 248);
   border-radius: 4px;
@@ -221,11 +205,11 @@ button:focus {
   font-size: 25px;
 }
 
-/* job post */
+/* job post and sortable styling */
 
 
 .job-post { 
-  width: 95%;
+  width: 90%;
   height: 90px;
   border-radius: 4px;
   margin: 0 auto;
@@ -235,6 +219,27 @@ button:focus {
   box-shadow: 0px 4px 8px rgba(24,0,69,0.3);
   position: relative;
   cursor: pointer;
+}
+
+.list-container .job-placeholder { 
+  font-size: 1.4em; 
+  width: 90%;
+  height: 90px;
+  border-radius: 4px;
+  margin: 0 auto;
+  margin-bottom: 10px; 
+  background-color: rgb(213, 193, 248);
+  animation: color-me-in 1.6s, color-me-in 2.5s infinite;
+}
+
+@keyframes color-me-in {
+  0% {
+    background: rgb(213, 193, 248);
+    
+  }
+  100% {
+    background: rgb(204, 172, 255);
+  }
 }
 
 /* job post icon container */
@@ -373,12 +378,12 @@ button:focus {
 
 /* delete job notice */
 
-#delete-job-notice p {
+.modal.delete-form p {
   margin-bottom: 20px;
   text-align: center;
 }
 
-#delete-job-notice .delete-button-container {
+.modal.delete-form .delete-button-container {
   margin: 0 auto;
   display: flex;
   width: 60%;
@@ -387,7 +392,7 @@ button:focus {
 
 /* edit and add forms */
 
-#edit-form button, #add-form button {
+.modal.edit-form button, .modal.add-form button {
   margin-top: 20px;
   float: right;
 }

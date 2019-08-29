@@ -39,9 +39,9 @@
   </header>
   
     <div class='lists-display-container'>
-      <div class='list-order-container'></div>
+      <div class='list-order-container' id='list-order-container'></div>
       <div class='new-list-container'>
-          <div id='new-list-button'>
+          <div class='new-list-button' id='new-list-button'>
             <p>+ Add a new list</p>
           </div>
       </div>
@@ -87,7 +87,7 @@
   
   <!-- modal for deleting jobs -->
 
-  <form id='delete-job-notice' class='modal'>
+  <form id='delete-form' class='modal delete-form'>
     <header>Delete a job</header>
     <input type="hidden" id='delete-job-id'>
     <input type="hidden" id='delete-list-id'>
@@ -99,7 +99,7 @@
   </form>
 
   <!-- modal for adding jobs -->
-  <form id="add-form" class="modal">
+  <form id="add-form" class="modal add-form">
       <header>Add a job</header>
       <input type="hidden" id='add-list-id'>
       <div class='input-container'>
@@ -118,7 +118,7 @@
   </form>
 
   <!-- modal for editing job info -->
-  <form id="edit-form" class="modal">
+  <form id="edit-form" class="modal edit-form">
       <header>Job information</header>
       <input type="hidden" id='edit-job-id'>
       <div class='input-container'>
