@@ -142,9 +142,15 @@ $(function() {
     axis: 'x',
     tolerance: 'pointer',
     handle: '.title-wrapper',
-    stop: function () {
+    start: function (e, ui) {
+      ui.helper.toggleClass('is-dragging')
+    },
+    beforeStop: function (e, ui) {
+      ui.helper.toggleClass('is-dragging');
+    },
+    stop: function (e, ui) {
       let listOrder = $listOrderContainer.sortable('toArray');
-      localStorage.setItem('listOrder', JSON.stringify(listOrder));
+      localStorage.setItem('listOrder', JSON.stringify(listOrder)); 
     }
   });
 

@@ -132,6 +132,12 @@ button:focus {
   border-top: 0px;
   color: rgb(85, 3, 85);
   flex-direction: column;
+  transition: transform .5s;
+}
+
+.list-container.is-dragging {
+  box-shadow: 0 0 20px rgba(24,0,69,0.4);
+  transform: scale(0.99);
 }
 
 .list-container .job-sortable { 
@@ -141,8 +147,6 @@ button:focus {
   flex: 1;
   margin-bottom: 5px;
 }
-
-
 
 /* list title */
 
