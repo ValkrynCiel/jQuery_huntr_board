@@ -59,7 +59,7 @@ $(function() {
 
   /** fills list template with information title and id info*/
   function createList(listId, title) {
-      debugger
+  
     let $list = $($('#list-template').html());
 
       $list
@@ -133,6 +133,7 @@ $(function() {
     tolerance: 'pointer',
     handle: '.fa-arrows-alt-h',
     helper: 'clone',
+    revert: true,
     start: function (e, ui) {
       ui.helper.toggleClass('is-dragging');
       ui.item.toggleClass('is-dragging');
@@ -144,7 +145,7 @@ $(function() {
     }
   });
 
-  // customization of job sorting interactions and effects
+  // job sorting interactions and effects
   $(".job-sortable").sortable({
     placeholder: 'job-placeholder',
     connectWith: ".job-sortable",
@@ -163,7 +164,7 @@ $(function() {
     },
     receive: function (e , ui) {
       // partial update on the receiver of a job post when dragging
-      // (the rest is done in stop method)
+      // the rest is done in stop method
       let time = Date.now()
       let $jobPost = ui.item;
 
@@ -172,23 +173,25 @@ $(function() {
         .html(moment(time).fromNow());
 
       $jobPost.data().info.time = time;
-      jobs[$jobPost.attr('id')].time = time;
+      saveJobInfo($jobPost.attr('id'), { time });
 
       let $list = $(this).closest('.list-container');
       let $sortable = $list.children('.job-sortable').eq(0);
 
-      lists[$list.attr('id')].order = $sortable.sortable('toArray');
+      let order = $sortable.sortable('toArray');
+
+      saveListInfo($list.attr('id'), { order });
       saveToLocalStorage({ jobs });
     },
     stop: function (e, ui) {
       // updates state when finished dragging
       let $list = $(this).closest('.list-container');
       let $sortable = $list.children('.job-sortable').eq(0);
+      let order = $sortable.sortable('toArray')
 
-      lists[$list.attr('id')].order = $sortable.sortable('toArray');
-      
-      ui.item.eq(0).toggleClass('is-dragging')
+      saveListInfo($list.attr('id'), { order })
       saveToLocalStorage({ lists });
+      ui.item.eq(0).toggleClass('is-dragging')
     }
   });
 
@@ -200,11 +203,12 @@ $(function() {
     let listId = Date.now();
     
     listOrder.push(listId);
-    lists[listId] = {title: '', order: []};
+    let listInfo = {title: '', order: []};
 
     $listOrderContainer.append(createList(listId, ''));
 
-    saveToLocalStorage({ lists, listOrder });
+    saveListInfo(listId, listInfo);
+    saveToLocalStorage({ listOrder });
 
   });
 
@@ -246,9 +250,9 @@ $(function() {
         .eq(0)
         .attr('id');
 
-    // for DOM removal
+    // info for DOM removal
     $deleteJobId.val(jobId);
-    // for state removal
+    // info for state removal
     $deleteListId.val(listId);
 
     $deleteNotice.modal({
@@ -257,7 +261,7 @@ $(function() {
 
   });
 
-  /** opens the add job form initialized to that list */
+  /** opens the add job form with list specific info */
   $body.on('click', '.add-job-button', function(e) {
     let listId = $(this)
       .closest('.list-container')
@@ -271,7 +275,7 @@ $(function() {
     
   });
 
-  /** inverts color of icon on mouse hover  */
+  /** inverts color of icon in job post on mouse hover  */
   $body.on('mouseenter', '.icon', function (e) {
     let color = $(this).closest('.job-post').css('background-color');
     $(this).css({
@@ -293,11 +297,10 @@ $(function() {
       .closest('.list-container')
       .attr('id');
 
-    lists[listId].title = title;
-    saveToLocalStorage({ lists }); 
+    saveListInfo(listId, { title })
   });
 
-  // Pushing return on keyboard will blur title input and save automatically
+  /** Pushing return on keyboard will blur title input and save automatically */ 
   $body.on('keypress', '.list-title', function (e) {
     let keycode = (event.keyCode ? event.keyCode : event.which);
     if (keycode == '13') $(this).blur();
@@ -321,16 +324,17 @@ $(function() {
     let time = Date.now();
     let color = `rgb(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)})`;
     
-    let info = { company, position, link, time, color, notes: '' }
-    
     // add job post to DOM (time is used as ID for now)
-    let $jobPost = createJobPost(time, info);
-    $sortable.append($jobPost);
+    let jobId = time;
+    let jobInfo = { company, position, link, time, color, notes: '' };
 
+    let $jobPost = createJobPost(jobId, jobInfo);
+    $sortable.append($jobPost);
+    
     // save job in state
-    jobs[jobId] = info
-    lists[listId].order = $sortable.sortable('toArray');
-    saveToLocalStorage({ jobs, lists });
+    let order = $sortable.sortable('toArray')
+    saveJobInfo(jobId, jobInfo);
+    saveListInfo(listId, { order });
 
     // reset inputs
     $('.modal input').val('');
@@ -347,17 +351,16 @@ $(function() {
     let company = $editCompany.val();
     let position = $editPosition.val();
     let link = $editLink.val()
-    let id = $editJobId.val();
+    let jobId = $editJobId.val();
     let notes = $editNotes.val();
 
     if (!company) return;
+    // edit state
+    saveJobInfo(jobId, { color, company, position, link, notes });
 
-    jobs[id] = { color, company, position, link, notes };
-
-    let $newJobPost = createJobPost(id, jobs[id]);
-    $(`#${id}`).replaceWith($newJobPost);
-
-    saveToLocalStorage({ jobs });
+    // replace in DOM
+    let $newJobPost = createJobPost(jobId, jobs[jobId]);
+    $(`#${jobId}`).replaceWith($newJobPost);
 
     $.modal.close();
   });
@@ -371,11 +374,11 @@ $(function() {
 
     // DOM removal
     $job.remove();
-    delete jobs[$job.attr('id')];
 
     // state removal
-    lists[$list.attr('id')].order = $sortable.sortable('toArray');
-    saveToLocalStorage({ lists, jobs });
+    let order = $sortable.sortable('toArray')
+    deleteJobInfo($job.attr('id'));
+    saveListInfo($list.attr('id'), { order });
 
     $.modal.close();
   });

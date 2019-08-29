@@ -37,3 +37,38 @@ function loadFromLocalStorage () {
   return { listOrder, lists, jobs };
 }
 
+function saveJobInfo (jobId, jobInfo) {
+  // add a job
+  if (!jobs[jobId]) {
+
+    jobs[jobId] = jobInfo;
+
+  } else {
+  //edit a job
+    for (let key in jobInfo) {
+      jobs[jobId][key] = jobInfo[key];
+    }
+  }
+  saveToLocalStorage({ jobs });
+}
+
+function deleteJobInfo (jobId) {
+  delete jobs[jobId];
+  saveToLocalStorage({ jobs });
+}
+
+function saveListInfo (listId, listInfo) {
+  //add a list
+  if (!lists[listId]) {
+
+    lists[listId] = listInfo;
+
+  } else {
+    //edit a list
+    for (let key in listInfo) {
+      lists[listId][key] = listInfo[key];
+    }
+  }
+  saveToLocalStorage({ lists });
+}
+
