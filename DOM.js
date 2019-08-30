@@ -2,6 +2,10 @@ $(function() {
 
   let $body = $('body');
 
+  // container for creating and storing lists
+  let $listOrderContainer = $('#list-order-container');
+  let $newListButton = $('#new-list-button');
+
   // delete form and inputs
   let $deleteNotice = $('#delete-form');
   let $deleteListId = $('#delete-list-id');
@@ -16,7 +20,7 @@ $(function() {
   let $addListId = $('#add-list-id');
   let $addLink = $('#add-link');
 
-  // edit/view info form and inputs
+  // edit info form and inputs
   let $editForm = $('#edit-form');
   let $editJobId = $('#edit-job-id')
   let $editCompany = $('#edit-company');
@@ -24,10 +28,6 @@ $(function() {
   let $editColor = $('#edit-color');
   let $editNotes = $('#edit-notes');
   let $editLink = $('#edit-link');
-
-  // container for creating and storing lists
-  let $listOrderContainer = $('#list-order-container');
-  let $newListButton = $('#new-list-button');
   
   /*********** INITIALIZATION OF INTERFACE ****************/
 
@@ -126,7 +126,7 @@ $(function() {
   }
 
   /************ JQUERY UI SORTABLE CUSTOMIZATION ***********/
-  function enableSort () {
+  function initializeSort () {
     // list sorting interactions and effects
     $listOrderContainer.sortable({
       tolerance: 'pointer',
@@ -183,16 +183,16 @@ $(function() {
         // updates state when finished dragging
         let $list = $(this).closest('.list-container');
         let $sortable = $list.children('.job-sortable').eq(0);
-        let order = $sortable.sortable('toArray')
+        let order = $sortable.sortable('toArray');
 
-        saveListInfo($list.attr('id'), { order })
-        ui.item.eq(0).toggleClass('is-dragging')
+        saveListInfo($list.attr('id'), { order });
+        ui.item.eq(0).toggleClass('is-dragging');
       }
     });
-  } enableSort();
-
-  /************ GLOBAL EVENT LISTENERS AND HANDLERS *******/
-
+  } 
+  
+  initializeSort();
+  
   /** adds a new list to state and to DOM */
   $newListButton.click(function () {
 
@@ -202,11 +202,15 @@ $(function() {
     $listOrderContainer.append(createList(listId, ''));
     $listOrderContainer.sortable('refresh');
     
-    enableSort();
+    initializeSort();
     saveListInfo(listId, listInfo);
     saveListOrder($listOrderContainer.sortable('toArray'));
 
   });
+
+
+  /************ GLOBAL EVENT LISTENERS AND HANDLERS *******/
+
 
   /** clicking a job post displays the job info form with inputs prepopulated */
   $body.on('click', '.job-post', function(e) {

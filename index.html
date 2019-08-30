@@ -35,21 +35,23 @@
 </head>
 <body>
 
+
   <header class='banner'>
     <h1>Hunty Board</h1>
   </header>
   
-    <div class='list-display-container'>
-      <div class='list-order-container' id='list-order-container'></div>
-      <div class='new-list-container'>
-          <div class='new-list-button' id='new-list-button'>
-            <p>+ Add a new list</p>
-          </div>
-      </div>
+  <!-- container for lists -->
+  <div class='list-display-container'>
+    <div class='list-order-container' id='list-order-container'></div>
+    <div class='new-list-container'>
+        <div class='new-list-button' id='new-list-button'>
+          <p>+ Add a new list</p>
+        </div>
     </div>
+  </div>
  
 
-  <!-- template for dynamically creating columns -->
+  <!-- template for dynamically creating lists -->
   <template id='list-template'>
     <div class='list-container'>
         <header class='list-header'>
