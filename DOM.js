@@ -29,7 +29,7 @@ $(function() {
   let $listOrderContainer = $('#list-order-container');
   let $newListButton = $('#new-list-button');
   
-  /*********** Initialization of Interface ****************/
+  /*********** INITIALIZATION OF INTERFACE ****************/
 
   displayLists();
   setTimeout(updateTimeDisplay, 60000);
@@ -125,72 +125,73 @@ $(function() {
     return $jobPost
   }
 
-  /************ jQuery UI Sortable Customization ***********/
-
-  // list sorting interactions and effects
-  $listOrderContainer.sortable({
-    tolerance: 'pointer',
-    handle: '.fa-arrows-alt-h',
-    helper: 'clone',
-    revert: true,
-    start: function (e, ui) {
-      ui.helper.toggleClass('is-dragging');
-      ui.item.toggleClass('is-dragging');
-    },
-    stop: function (e, ui) {
-      ui.item.toggleClass('is-dragging');
-      saveListOrder($listOrderContainer.sortable('toArray'));
-    }
-  });
-
-  // job sorting interactions and effects
-  $(".job-sortable").sortable({
-    placeholder: 'job-placeholder',
-    connectWith: ".job-sortable",
-    opacity: 0.8,
-    zIndex: 2,
-    start: function (e, ui) {
-      ui.item.eq(0).toggleClass('is-dragging');
-    },
-    over: function(e,ui) {
-      // necessary to scroll up and down on the list dragged over
-      if (ui.sender) {
-        let widget = ui.sender.data("ui-sortable");
-        widget.scrollParent = $(this);
-        widget.overflowOffset = $(this).offset();
+  /************ JQUERY UI SORTABLE CUSTOMIZATION ***********/
+  function enableSort () {
+    // list sorting interactions and effects
+    $listOrderContainer.sortable({
+      tolerance: 'pointer',
+      handle: '.fa-arrows-alt-h',
+      helper: 'clone',
+      revert: true,
+      start: function (e, ui) {
+        ui.helper.toggleClass('is-dragging');
+        ui.item.toggleClass('is-dragging');
+      },
+      stop: function (e, ui) {
+        ui.item.toggleClass('is-dragging');
+        saveListOrder($listOrderContainer.sortable('toArray'));
       }
-    },
-    receive: function (e , ui) {
-      // partial update on the receiver of a job post when dragging
-      // the rest is done in stop method
-      let time = Date.now()
-      let $jobPost = ui.item;
+    });
 
-      $jobPost
-        .find('.time')
-        .html(moment(time).fromNow());
+    // job sorting interactions and effects
+    $(".job-sortable").sortable({
+      placeholder: 'job-placeholder',
+      connectWith: ".job-sortable",
+      opacity: 0.8,
+      zIndex: 2,
+      start: function (e, ui) {
+        ui.item.eq(0).toggleClass('is-dragging');
+      },
+      over: function(e,ui) {
+        // necessary to scroll up and down on the list dragged over
+        if (ui.sender) {
+          let widget = ui.sender.data("ui-sortable");
+          widget.scrollParent = $(this);
+          widget.overflowOffset = $(this).offset();
+        }
+      },
+      receive: function (e , ui) {
+        // partial update on the receiver of a job post when dragging
+        // the rest is done in stop method
+        let time = Date.now()
+        let $jobPost = ui.item;
 
-      $jobPost.data().info.time = time;
+        $jobPost
+          .find('.time')
+          .html(moment(time).fromNow());
 
-      let $list = $(this).closest('.list-container');
-      let $sortable = $list.children('.job-sortable').eq(0);
-      let order = $sortable.sortable('toArray');
+        $jobPost.data().info.time = time;
 
-      saveJobInfo($jobPost.attr('id'), { time });
-      saveListInfo($list.attr('id'), { order });
-    },
-    stop: function (e, ui) {
-      // updates state when finished dragging
-      let $list = $(this).closest('.list-container');
-      let $sortable = $list.children('.job-sortable').eq(0);
-      let order = $sortable.sortable('toArray')
+        let $list = $(this).closest('.list-container');
+        let $sortable = $list.children('.job-sortable').eq(0);
+        let order = $sortable.sortable('toArray');
 
-      saveListInfo($list.attr('id'), { order })
-      ui.item.eq(0).toggleClass('is-dragging')
-    }
-  });
+        saveJobInfo($jobPost.attr('id'), { time });
+        saveListInfo($list.attr('id'), { order });
+      },
+      stop: function (e, ui) {
+        // updates state when finished dragging
+        let $list = $(this).closest('.list-container');
+        let $sortable = $list.children('.job-sortable').eq(0);
+        let order = $sortable.sortable('toArray')
 
-  /************ global event listeners and handlers *******/
+        saveListInfo($list.attr('id'), { order })
+        ui.item.eq(0).toggleClass('is-dragging')
+      }
+    });
+  } enableSort();
+
+  /************ GLOBAL EVENT LISTENERS AND HANDLERS *******/
 
   /** adds a new list to state and to DOM */
   $newListButton.click(function () {
@@ -199,7 +200,9 @@ $(function() {
     let listInfo = {title: '', order: []};
 
     $listOrderContainer.append(createList(listId, ''));
-
+    $listOrderContainer.sortable('refresh');
+    
+    enableSort();
     saveListInfo(listId, listInfo);
     saveListOrder($listOrderContainer.sortable('toArray'));
 
@@ -299,7 +302,7 @@ $(function() {
     if (keycode == '13') $(this).blur();
   });
 
-  /********* form event listeners and handlers *************/
+  /********* FORM EVENT LISTENERS AND HANDLERS *************/
 
   /** gather all info from add job form to create job post to append to DOM
    *  save to state
@@ -312,6 +315,7 @@ $(function() {
 
     let company = $addCompany.val();
     if (!company) return;
+    
     let position = $addPosition.val();
     let link = $addLink.val();
     let time = Date.now();
@@ -363,7 +367,6 @@ $(function() {
     e.preventDefault();
     let $job = $(`#${$deleteJobId.val()}`);
     let $list = $(`#${$deleteListId.val()}`);
-    let $sortable = $list.children('.job-sortable').eq(0);
 
     // DOM removal
     $job.remove();

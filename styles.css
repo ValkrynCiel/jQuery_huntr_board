@@ -139,7 +139,7 @@ button:focus {
 
 .list-container.is-dragging {
   box-shadow: 0 0 20px rgba(24,0,69,0.4);
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 
 .list-container .job-sortable { 

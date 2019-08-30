@@ -16,6 +16,7 @@ function _saveToLocalStorage ({ jobs, lists, listOrder }) {
   }
 }
 
+/** load from local storage or initialize data */
 function _loadFromLocalStorage () {
   let savedListOrder = localStorage.getItem('listOrder');
   let listOrder = savedListOrder ? JSON.parse(savedListOrder) :
@@ -34,6 +35,7 @@ function _loadFromLocalStorage () {
   5: {title: 'rejected', order:[]}
   };
 
+  _saveToLocalStorage({ listOrder, lists, jobs });
   return { listOrder, lists, jobs };
 }
 
@@ -76,7 +78,7 @@ function saveListInfo (listId, listInfo) {
 function deleteListInfo (listId) {
   delete lists[listId];
   listOrder = listOrder.filter( id => id !== listId );
-  _saveToLocalStorage({ lists, listId });
+  _saveToLocalStorage({ lists, listOrder });
 }
 
 function saveListOrder (listArr) {
